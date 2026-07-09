@@ -16,7 +16,7 @@ function Abouts() {
                     <p><FontAwesomeIcon icon={faPhone} className={st.icon} /> +852 54980873</p>
                     <p><FontAwesomeIcon icon={faEnvelope} className={st.icon} /> limbujimmy1@gmail.com</p>
                     <p><FontAwesomeIcon icon={faHouse} className={st.icon} /> Mong Kok, Hong Kong</p>
-                    <p>Full-stack engineer with 4+ years of experience shipping products across B2B platforms, SaaS tools, ERP systems, and consumer-facing applications. Strongest in Vue 3 and frontend architecture, with a focus on data-driven features and real-time interactivity. Currently leading development of 3D jewellery configurators and a white-label multi-tenant platform at DIY ROCKS.</p>
+                    <p>Software engineer with 4+ years of experience shipping products across B2B platforms, SaaS tools, ERP systems, and consumer-facing applications. Strongest in Vue 3 and frontend architecture, with a data-driven approach and full-stack capability across the MERN stack. Currently leading development of 3D jewellery configurators and a white-label multi-tenant platform at DIY ROCKS.</p>
                 </div>
             </div>
         </div>
