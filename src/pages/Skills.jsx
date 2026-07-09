@@ -76,9 +76,9 @@ function Skills() {
             <h4>Spoken Languages</h4>
             <div className={st.skills}>
                 <ul>
-                    <Chip label="English (Fluent)" />
-                    <Chip label="Nepali (Native)" />
-                    <Chip label="Cantonese (Conversational)" />
+                    <li className={st.noAction}>English (Fluent)</li>
+                    <li className={st.noAction}>Nepali (Native)</li>
+                    <li className={st.noAction}>Cantonese (Conversational)</li>
                 </ul>
             </div>
         </div>

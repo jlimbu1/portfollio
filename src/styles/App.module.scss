@@ -359,6 +359,17 @@ p, span, li {
   transform: translateY(0);
 }
 
+.skills .noAction {
+  cursor: default;
+}
+
+.skills .noAction:hover {
+  border-color: rgba(47, 202, 166, 0.1);
+  background: rgba(47, 202, 166, 0.05);
+  transform: none;
+  box-shadow: none;
+}
+
 .skills i {
   font-size: 1.3rem;
 }
@@ -367,6 +378,10 @@ p, span, li {
 footer {
   text-align: center;
   padding-bottom: 48px !important;
+}
+
+footer h2::after {
+  display: none;
 }
 
 .contactInfo {
