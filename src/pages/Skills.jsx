@@ -1,5 +1,19 @@
 import st from '../styles/App.module.scss'
 
+const scrollTo = (id) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+};
+
+function Chip({ icon, label, target }) {
+    return (
+        <li onClick={() => target && scrollTo(target)} title={target ? `Jump to ${label} usage` : ''}>
+            {icon && <i className={icon}></i>}
+            {label}
+        </li>
+    );
+}
+
 function Skills() {
     return (
         <div id='skills' className={st.container}>
@@ -8,59 +22,59 @@ function Skills() {
             <h4>Programming Languages</h4>
             <div className={st.skills}>
                 <ul>
-                    <li><i className="devicon-c-plain"></i> C</li>
-                    <li><i className="devicon-cplusplus-plain"></i> C++</li>
-                    <li><i className="devicon-java-plain-wordmark"></i> Java</li>
-                    <li><i className="devicon-javascript-plain"></i> JavaScript</li>
-                    <li><i className="devicon-typescript-plain"></i> TypeScript</li>
-                    <li><i className="devicon-nodejs-plain-wordmark"></i> NodeJS</li>
+                    <Chip icon="devicon-c-plain" label="C" target="arduino-gameboy" />
+                    <Chip icon="devicon-cplusplus-plain" label="C++" target="arduino-gameboy" />
+                    <Chip icon="devicon-java-plain-wordmark" label="Java" target="projects" />
+                    <Chip icon="devicon-javascript-plain" label="JavaScript" target="experiences" />
+                    <Chip icon="devicon-typescript-plain" label="TypeScript" target="experiences" />
+                    <Chip icon="devicon-nodejs-plain-wordmark" label="NodeJS" target="arm-mooc" />
                 </ul>
             </div>
 
             <h4>Frontend</h4>
             <div className={st.skills}>
                 <ul>
-                    <li><i className="devicon-vuejs-plain-wordmark"></i> Vue 2/3</li>
-                    <li><i className="devicon-react-original-wordmark"></i> React</li>
-                    <li><i className="devicon-nextjs-plain"></i> NextJS</li>
-                    <li><i className="devicon-nuxtjs-plain"></i> NuxtJS</li>
-                    <li><i className="devicon-tailwindcss-plain"></i> Tailwind CSS</li>
-                    <li><i className="devicon-bootstrap-plain"></i> Bootstrap</li>
-                    <li><i className="devicon-html5-plain-wordmark"></i> HTML5</li>
-                    <li><i className="devicon-css3-plain-wordmark"></i> CSS3</li>
+                    <Chip icon="devicon-vuejs-plain-wordmark" label="Vue 2/3" target="experiences" />
+                    <Chip icon="devicon-react-original-wordmark" label="React" target="wealthskey" />
+                    <Chip icon="devicon-nextjs-plain" label="NextJS" target="wealthskey" />
+                    <Chip icon="devicon-nuxtjs-plain" label="NuxtJS" target="experiences" />
+                    <Chip icon="devicon-tailwindcss-plain" label="Tailwind CSS" target="experiences" />
+                    <Chip icon="devicon-bootstrap-plain" label="Bootstrap" target="experiences" />
+                    <Chip icon="devicon-html5-plain-wordmark" label="HTML5" target="projects" />
+                    <Chip icon="devicon-css3-plain-wordmark" label="CSS3" target="projects" />
                 </ul>
             </div>
 
             <h4>Backend &amp; Database</h4>
             <div className={st.skills}>
                 <ul>
-                    <li><i className="devicon-express-original"></i> ExpressJS</li>
-                    <li><i className="devicon-nestjs-plain"></i> NestJS</li>
-                    <li><i className="devicon-mongodb-plain-wordmark"></i> MongoDB</li>
-                    <li><i className="devicon-socketio-original"></i> Socket.IO</li>
-                    <li>JWT</li>
-                    <li>Microservices</li>
+                    <Chip icon="devicon-express-original" label="ExpressJS" target="arm-mooc" />
+                    <Chip icon="devicon-nestjs-plain" label="NestJS" target="fletrix" />
+                    <Chip icon="devicon-mongodb-plain-wordmark" label="MongoDB" target="fletrix" />
+                    <Chip icon="devicon-socketio-original" label="Socket.IO" target="danger-dungeon" />
+                    <Chip label="JWT" target="experiences" />
+                    <Chip label="Microservices" target="experiences" />
                 </ul>
             </div>
 
             <h4>Tools &amp; Platforms</h4>
             <div className={st.skills}>
                 <ul>
-                    <li><i className="devicon-docker-plain"></i> Docker</li>
-                    <li><i className="devicon-kubernetes-plain"></i> Kubernetes</li>
-                    <li><i className="devicon-git-plain"></i> Git</li>
-                    <li><i className="devicon-linux-plain"></i> Linux</li>
-                    <li><i className="devicon-amazonwebservices-plain-wordmark"></i> AWS EC2</li>
-                    <li><i className="devicon-arduino-plain-wordmark"></i> Arduino</li>
+                    <Chip icon="devicon-docker-plain" label="Docker" target="arm-mooc" />
+                    <Chip icon="devicon-kubernetes-plain" label="Kubernetes" target="arm-mooc" />
+                    <Chip icon="devicon-git-plain" label="Git" target="projects" />
+                    <Chip icon="devicon-linux-plain" label="Linux" target="projects" />
+                    <Chip icon="devicon-amazonwebservices-plain-wordmark" label="AWS EC2" target="arm-mooc" />
+                    <Chip icon="devicon-arduino-plain-wordmark" label="Arduino" target="arduino-gameboy" />
                 </ul>
             </div>
 
-            <h4>Languages</h4>
+            <h4>Spoken Languages</h4>
             <div className={st.skills}>
                 <ul>
-                    <li>English (Fluent)</li>
-                    <li>Nepali (Native)</li>
-                    <li>Cantonese (Conversational)</li>
+                    <Chip label="English (Fluent)" />
+                    <Chip label="Nepali (Native)" />
+                    <Chip label="Cantonese (Conversational)" />
                 </ul>
             </div>
         </div>

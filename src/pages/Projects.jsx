@@ -7,7 +7,7 @@ function Projects() {
         <div id='projects' className={st.container}>
             <h2>Projects</h2>
 
-            <div className={st.card}>
+            <div className={st.card} id="ticket-challenger">
                 <h4>Ticket Challenger</h4>
                 <div className="details">
                     <p><FontAwesomeIcon icon={faCode} className={st.icon} /> HTML5, CSS3, JavaScript</p>
@@ -16,7 +16,7 @@ function Projects() {
                 </div>
             </div>
 
-            <div className={st.card}>
+            <div className={st.card} id="arm-mooc">
                 <h4>MOOC Web Platform for ARM Assembly Language</h4>
                 <div className="details">
                     <p><FontAwesomeIcon icon={faCode} className={st.icon} /> MongoDB, ExpressJS, ReactJS, NodeJS, Docker, Kubernetes</p>
@@ -25,7 +25,7 @@ function Projects() {
                 </div>
             </div>
 
-            <div className={st.card}>
+            <div className={st.card} id="danger-dungeon">
                 <h4>Danger Dungeon (Browser Game)</h4>
                 <div className="details">
                     <p><FontAwesomeIcon icon={faCode} className={st.icon} /> HTML5, CSS3, JavaScript, WebSocket</p>
@@ -34,7 +34,7 @@ function Projects() {
                 </div>
             </div>
 
-            <div className={st.card}>
+            <div className={st.card} id="arduino-gameboy">
                 <h4>Arduino Game Boy</h4>
                 <div className="details">
                     <p><FontAwesomeIcon icon={faCode} className={st.icon} /> C/C++, Arduino, OOP</p>
@@ -43,7 +43,7 @@ function Projects() {
                 </div>
             </div>
 
-            <div className={st.card}>
+            <div className={st.card} id="game-guide">
                 <h4>Game Guide Page</h4>
                 <div className="details">
                     <p><FontAwesomeIcon icon={faCode} className={st.icon} /> HTML5, CSS3, JavaScript</p>

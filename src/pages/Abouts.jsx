@@ -1,6 +1,6 @@
 import st from '../styles/App.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHouse, faPhone, faEnvelope, faGlobe } from '@fortawesome/free-solid-svg-icons'
+import { faHouse, faPhone, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 
 function Abouts() {
     return (
@@ -13,8 +13,7 @@ function Abouts() {
                     <p><FontAwesomeIcon icon={faPhone} className={st.icon} /> +852 54980873</p>
                     <p><FontAwesomeIcon icon={faEnvelope} className={st.icon} /> limbujimmy1@gmail.com</p>
                     <p><FontAwesomeIcon icon={faHouse} className={st.icon} /> Mong Kok, Hong Kong</p>
-                    <p><FontAwesomeIcon icon={faGlobe} className={st.icon} /> <a href="https://limbujimmy.netlify.app/" target="_blank" rel="noreferrer noopener">limbujimmy.netlify.app</a></p>
-                    <p>I am a software engineer passionate about building interactive, real-time web applications. I specialize in frontend development with modern frameworks like Vue 3 and React, 3D configurator tools, and full-stack systems with clean architecture.</p>
+                    <p>Software engineer with 4+ years of experience building interactive web applications. I specialize in Vue 3, React, and 3D configurator tools — currently leading frontend architecture at DIY ROCKS, where I built a white-label multi-tenant platform and real-time jewellery customization tools used across the B2B pipeline.</p>
                 </div>
             </div>
         </div>

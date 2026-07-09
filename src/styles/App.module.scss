@@ -168,6 +168,7 @@ p, span, li {
 /* ===== Cards ===== */
 .card {
   padding: 4px 0;
+  scroll-margin-top: 90px;
 }
 
 .card + .card {
@@ -200,6 +201,21 @@ p, span, li {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 32px;
+  align-items: stretch;
+}
+
+.eduGrid .card {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+.eduGrid .card + .card {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
 }
 
 .eduGrid img {
@@ -237,12 +253,19 @@ p, span, li {
   padding: 8px 14px;
   font-size: 0.88rem;
   white-space: nowrap;
-  transition: border-color 0.2s, background 0.2s;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, transform 0.15s;
+  user-select: none;
 }
 
 .skills li:hover {
   border-color: var(--primary-header-color);
   background: rgba(151, 255, 231, 0.06);
+  transform: translateY(-2px);
+}
+
+.skills li:active {
+  transform: translateY(0);
 }
 
 .skills i {

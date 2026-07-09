@@ -42,7 +42,7 @@ function Exps() {
             </div>
 
             {/* Fletrix */}
-            <div className={st.card}>
+            <div className={st.card} id="fletrix">
                 <h4>Software Engineer</h4>
                 <div className="details">
                     <p><FontAwesomeIcon icon={faBuilding} className={st.icon} /> Fletrix Limited</p>
@@ -59,7 +59,7 @@ function Exps() {
             </div>
 
             {/* Wealthskey - Part Time */}
-            <div className={st.card}>
+            <div className={st.card} id="wealthskey">
                 <h4>Software Developer (Part-Time)</h4>
                 <div className="details">
                     <p><FontAwesomeIcon icon={faBuilding} className={st.icon} /> Wealthskey Limited</p>
