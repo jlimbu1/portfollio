@@ -2,10 +2,14 @@ import st from '../styles/App.module.scss'
 import React, { useState, useCallback, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faX } from '@fortawesome/free-solid-svg-icons'
+import useScrollSpy from '../hooks/useScrollSpy'
+
+const sections = ['abouts', 'educations', 'experiences', 'projects', 'skills', 'contacts'];
 
 function Nav() {
     const [scrolled, setScrolled] = useState(false);
     const [show, setShow] = useState(false);
+    const active = useScrollSpy(sections, 120);
 
     const handleScroll = useCallback(() => {
         setScrolled(window.scrollY > 50);
@@ -35,12 +39,23 @@ function Nav() {
                 </button>
 
                 <nav className={`${st.navLinks} ${show ? st.navOpen : ''}`}>
-                    <a href="#abouts" onClick={closeMenu}>About</a>
-                    <a href="#educations" onClick={closeMenu}>Education</a>
-                    <a href="#experiences" onClick={closeMenu}>Experience</a>
-                    <a href="#projects" onClick={closeMenu}>Projects</a>
-                    <a href="#skills" onClick={closeMenu}>Skills</a>
-                    <a href="#contacts" onClick={closeMenu}>Contact</a>
+                    {[
+                        ['abouts', 'About'],
+                        ['educations', 'Education'],
+                        ['experiences', 'Experience'],
+                        ['projects', 'Projects'],
+                        ['skills', 'Skills'],
+                        ['contacts', 'Contact'],
+                    ].map(([id, label]) => (
+                        <a
+                            key={id}
+                            href={`#${id}`}
+                            className={active === id ? st.navActive : ''}
+                            onClick={closeMenu}
+                        >
+                            {label}
+                        </a>
+                    ))}
                 </nav>
             </div>
         </header>

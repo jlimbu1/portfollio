@@ -1,10 +1,14 @@
 import st from '../styles/App.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPhone, faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import useScrollReveal from '../hooks/useScrollReveal'
 
 function Footer() {
+    const [ref, visible] = useScrollReveal();
+
     return (
         <footer id='contacts' className={st.container}>
+            <div ref={ref} className={`${st.reveal} ${visible ? st.visible : ''}`}>
             <h2>Contact</h2>
             <div className={st.contactInfo}>
                 <p><FontAwesomeIcon icon={faPhone} className={st.icon} /> +852 54980873</p>
@@ -24,6 +28,7 @@ function Footer() {
                 </a>
             </div>
             <p className={st.copyright}>&copy; {new Date().getFullYear()} Jimmy Limbu. All rights reserved.</p>
+            </div>
         </footer>
     )
 }

@@ -1,10 +1,14 @@
 import st from '../styles/App.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight, faBuilding } from '@fortawesome/free-solid-svg-icons'
+import useScrollReveal from '../hooks/useScrollReveal'
 
 function Exps() {
+    const [ref, visible] = useScrollReveal();
+
     return (
         <div id='experiences' className={st.container}>
+            <div ref={ref} className={`${st.reveal} ${visible ? st.visible : ''}`}>
             <h2>Experience</h2>
 
             {/* DIY ROCKS - Frontend Data Engineer */}
@@ -86,6 +90,7 @@ function Exps() {
                     </ul>
                 </div>
             </div>
+        </div>
         </div>
     )
 }

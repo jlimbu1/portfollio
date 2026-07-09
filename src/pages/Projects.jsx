@@ -1,10 +1,14 @@
 import st from '../styles/App.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLink, faCode, faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import useScrollReveal from '../hooks/useScrollReveal'
 
 function Projects() {
+    const [ref, visible] = useScrollReveal();
+
     return (
         <div id='projects' className={st.container}>
+            <div ref={ref} className={`${st.reveal} ${visible ? st.visible : ''}`}>
             <h2>Projects</h2>
 
             <div className={st.card} id="ticket-challenger">
@@ -51,6 +55,7 @@ function Projects() {
                     <p><FontAwesomeIcon icon={faArrowRight} className={st.icon} /> An information hub for an MMORPG guild, designed to be simple enough for other members to contribute to over time.</p>
                 </div>
             </div>
+        </div>
         </div>
     )
 }

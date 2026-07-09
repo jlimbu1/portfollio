@@ -1,5 +1,22 @@
 @import "./Const.module.scss";
 
+/* ===== Keyframes ===== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(151, 255, 231, 0); }
+  50%      { box-shadow: 0 0 0 1px rgba(151, 255, 231, 0.12); }
+}
+
 /* ===== Reset & Base ===== */
 *,
 *::before,
@@ -38,10 +55,43 @@ h1, h2, h3, h4 {
   margin: 0 0 0.5rem;
 }
 
+h2 {
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+h2::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, rgba(47, 202, 166, 0.25), transparent);
+}
+
 p, span, li {
   color: var(--primary-text-color);
-  line-height: 1.6;
+  line-height: 1.7;
 }
+
+/* ===== Scroll reveal ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger children */
+.reveal > .card:nth-child(1) { transition-delay: 0s; }
+.reveal > .card:nth-child(2) { transition-delay: 0.1s; }
+.reveal > .card:nth-child(3) { transition-delay: 0.15s; }
+.reveal > .card:nth-child(4) { transition-delay: 0.2s; }
+.reveal > .card:nth-child(5) { transition-delay: 0.25s; }
 
 /* ===== Layout ===== */
 .App {
@@ -55,11 +105,11 @@ p, span, li {
 }
 
 .container {
-  padding: 48px 0;
+  padding: 56px 0;
 }
 
 .container + .container {
-  border-top: 1px solid rgba(47, 202, 166, 0.15);
+  border-top: 1px solid rgba(47, 202, 166, 0.12);
 }
 
 /* ===== Navigation ===== */
@@ -94,6 +144,10 @@ p, span, li {
   height: 48px;
   border-radius: 4px;
   object-fit: cover;
+  transition: transform 0.2s;
+}
+.logo:hover img {
+  transform: scale(1.08);
 }
 
 .navLinks {
@@ -107,12 +161,18 @@ p, span, li {
   border-radius: 8px;
   font-size: 0.9rem;
   font-weight: 500;
+  position: relative;
   transition: color 0.2s, background 0.2s;
 }
 .navLinks a:hover {
   color: var(--primary-header-color);
   background: rgba(151, 255, 231, 0.08);
   text-decoration: none;
+}
+
+.navActive {
+  color: var(--primary-header-color) !important;
+  background: rgba(151, 255, 231, 0.08) !important;
 }
 
 .hamburger {
@@ -146,6 +206,11 @@ p, span, li {
   border: 2px solid var(--primary-header-color);
   object-fit: cover;
   flex-shrink: 0;
+  transition: box-shadow 0.4s, transform 0.4s;
+}
+.pfp:hover {
+  box-shadow: 0 0 30px rgba(151, 255, 231, 0.2);
+  transform: scale(1.03);
 }
 
 .abouts {
@@ -165,16 +230,28 @@ p, span, li {
   margin: 6px 0;
 }
 
+.abouts .icon {
+  opacity: 0.5;
+}
+
 /* ===== Cards ===== */
 .card {
-  padding: 4px 0;
+  padding: 20px 20px 20px 24px;
   scroll-margin-top: 90px;
+  border-left: 2px solid transparent;
+  border-radius: 0 8px 8px 0;
+  transition: border-color 0.3s, background 0.3s, transform 0.2s;
+}
+
+.card:hover {
+  border-left-color: var(--primary-header-color);
+  background: rgba(151, 255, 231, 0.03);
+  transform: translateX(4px);
 }
 
 .card + .card {
-  margin-top: 36px;
-  padding-top: 28px;
-  border-top: 1px solid rgba(47, 202, 166, 0.1);
+  margin-top: 28px;
+  border-top: none;
 }
 
 .card h4 {
@@ -208,14 +285,24 @@ p, span, li {
   display: flex;
   flex-direction: column;
   margin-top: 0;
-  padding-top: 0;
-  border-top: none;
+  padding: 24px;
+  border-left: none;
+  border-radius: 12px;
+  border: 1px solid rgba(47, 202, 166, 0.08);
+  background: rgba(47, 202, 166, 0.03);
+  transition: border-color 0.3s, background 0.3s, transform 0.2s, box-shadow 0.3s;
+}
+
+.eduGrid .card:hover {
+  border-color: rgba(151, 255, 231, 0.25);
+  background: rgba(151, 255, 231, 0.04);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+  transform: translateY(-4px);
 }
 
 .eduGrid .card + .card {
   margin-top: 0;
-  padding-top: 0;
-  border-top: none;
+  border-top: 1px solid rgba(47, 202, 166, 0.08);
 }
 
 .eduGrid img {
@@ -229,12 +316,15 @@ p, span, li {
 
 /* ===== Skills ===== */
 .skills {
-  margin-bottom: 28px;
+  margin-bottom: 32px;
 }
 
 .skills h4 {
   margin-bottom: 12px;
   font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: rgba(151, 255, 231, 0.7);
 }
 
 .skills ul {
@@ -247,21 +337,22 @@ p, span, li {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(47, 202, 166, 0.06);
-  border: 1px solid rgba(47, 202, 166, 0.12);
+  background: rgba(47, 202, 166, 0.05);
+  border: 1px solid rgba(47, 202, 166, 0.1);
   border-radius: 8px;
   padding: 8px 14px;
   font-size: 0.88rem;
   white-space: nowrap;
   cursor: pointer;
-  transition: border-color 0.2s, background 0.2s, transform 0.15s;
+  transition: border-color 0.2s, background 0.2s, transform 0.15s, box-shadow 0.2s;
   user-select: none;
 }
 
 .skills li:hover {
   border-color: var(--primary-header-color);
-  background: rgba(151, 255, 231, 0.06);
+  background: rgba(151, 255, 231, 0.08);
   transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(151, 255, 231, 0.1);
 }
 
 .skills li:active {
@@ -290,23 +381,26 @@ footer {
   display: flex;
   justify-content: center;
   gap: 24px;
-  margin: 24px 0;
+  margin: 28px 0;
 }
 
 .socialLinks a {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  background: rgba(47, 202, 166, 0.08);
-  transition: background 0.2s, transform 0.2s;
+  background: rgba(47, 202, 166, 0.06);
+  border: 1px solid rgba(47, 202, 166, 0.1);
+  transition: background 0.2s, transform 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
 
 .socialLinks a:hover {
-  background: rgba(151, 255, 231, 0.15);
-  transform: translateY(-2px);
+  background: rgba(151, 255, 231, 0.12);
+  border-color: var(--primary-header-color);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(151, 255, 231, 0.12);
 }
 
 .socialLinks i {
@@ -324,19 +418,18 @@ footer {
 
 .copyright {
   font-size: 0.8rem;
-  opacity: 0.5;
-  margin-top: 16px;
+  opacity: 0.4;
 }
 
 /* ===== Icons ===== */
 .icon {
   color: var(--primary-text-color);
   margin-right: 6px;
-  opacity: 0.7;
+  opacity: 0.6;
   width: 16px;
 }
 
-/* ===== Deprecated / not used directly ===== */
+/* ===== Deprecated ===== */
 .hide {
   display: none !important;
 }
@@ -357,7 +450,11 @@ footer {
   }
 
   .container {
-    padding: 36px 0;
+    padding: 40px 0;
+  }
+
+  h2 {
+    font-size: 1.35rem;
   }
 
   .wrapper {
@@ -374,10 +471,6 @@ footer {
 
   .abouts {
     min-width: 0;
-  }
-
-  .abouts p {
-    justify-content: center;
   }
 
   /* Nav mobile */
@@ -422,10 +515,22 @@ footer {
     border-radius: 8px;
   }
 
+  .card {
+    padding: 16px 12px 16px 18px;
+  }
+
+  .card:hover {
+    transform: none;
+  }
+
   /* Education */
   .eduGrid {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 16px;
+  }
+
+  .eduGrid .card:hover {
+    transform: none;
   }
 
   /* Skills */
@@ -446,7 +551,7 @@ footer {
   }
 
   .container {
-    padding: 28px 0;
+    padding: 32px 0;
   }
 
   .pfp {
@@ -455,7 +560,7 @@ footer {
   }
 
   h2 {
-    font-size: 1.3rem;
+    font-size: 1.25rem;
   }
 
   .card h4 {
@@ -480,7 +585,7 @@ footer {
   }
 
   .socialLinks a {
-    width: 40px;
-    height: 40px;
+    width: 42px;
+    height: 42px;
   }
 }

@@ -1,4 +1,5 @@
 import st from '../styles/App.module.scss'
+import useScrollReveal from '../hooks/useScrollReveal'
 
 const scrollTo = (id) => {
     const el = document.getElementById(id);
@@ -15,8 +16,11 @@ function Chip({ icon, label, target }) {
 }
 
 function Skills() {
+    const [ref, visible] = useScrollReveal();
+
     return (
         <div id='skills' className={st.container}>
+            <div ref={ref} className={`${st.reveal} ${visible ? st.visible : ''}`}>
             <h2>Skills</h2>
 
             <h4>Programming Languages</h4>
@@ -77,6 +81,7 @@ function Skills() {
                     <Chip label="Cantonese (Conversational)" />
                 </ul>
             </div>
+        </div>
         </div>
     )
 }
