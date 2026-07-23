@@ -1,0 +1,82 @@
+@mixin respond-up($breakpoint) {
+  @if $breakpoint == sm {
+    @media (min-width: $breakpoint-sm) { @content; }
+  } @else if $breakpoint == md {
+    @media (min-width: $breakpoint-md) { @content; }
+  } @else if $breakpoint == lg {
+    @media (min-width: $breakpoint-lg) { @content; }
+  }
+}
+
+@mixin respond-down($breakpoint) {
+  @if $breakpoint == sm {
+    @media (max-width: ($breakpoint-sm - 1px)) { @content; }
+  } @else if $breakpoint == md {
+    @media (max-width: ($breakpoint-md - 1px)) { @content; }
+  } @else if $breakpoint == lg {
+    @media (max-width: ($breakpoint-lg - 1px)) { @content; }
+  }
+}
+
+@mixin animation($name, $duration: $transition-normal, $delay: 0s, $fill: both) {
+  animation: $name $duration ease $delay $fill;
+}
+
+@mixin fade-in($duration: $transition-normal, $delay: 0s) {
+  @include animation(fadeIn, $duration, $delay);
+}
+
+@mixin slide-up($duration: $transition-normal, $delay: 0s, $distance: 20px) {
+  @include animation(slideUp, $duration, $delay);
+  --slide-distance: #{$distance};
+}
+
+@mixin slide-in-left($duration: $transition-normal, $delay: 0s, $distance: 20px) {
+  @include animation(slideInLeft, $duration, $delay);
+  --slide-distance: #{$distance};
+}
+
+@mixin slide-in-right($duration: $transition-normal, $delay: 0s, $distance: 20px) {
+  @include animation(slideInRight, $duration, $delay);
+  --slide-distance: #{$distance};
+}
+
+@mixin scale-in($duration: $transition-normal, $delay: 0s) {
+  @include animation(scaleIn, $duration, $delay);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(var(--slide-distance, 20px)); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(calc(-1 * var(--slide-distance, 20px))); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(var(--slide-distance, 20px)); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@mixin scroll-reveal($initial-translate-y: 20px, $duration: $transition-normal) {
+  opacity: 0;
+  transform: translateY($initial-translate-y);
+  transition: opacity $duration ease, transform $duration ease;
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
