@@ -1,0 +1,55 @@
+const timelineData = [
+  {
+    type: 'education',
+    date: '2016-09 – 2020-06',
+    title: 'Bachelor of Science in Computer Science',
+    institution: 'University of Hong Kong',
+    description: 'Focused on software engineering, data structures, and algorithms. Dean’s list for three consecutive years.',
+    image: null,
+    link: null,
+  },
+  {
+    type: 'experience',
+    date: '2021-01 – Present',
+    title: 'Software Engineer',
+    company: 'DIY ROCKS',
+    description: 'Leading development of 3D jewellery configurators and a white-label multi-tenant platform. Working across the full stack with Vue 3, Node.js, and cloud infrastructure.',
+    image: null,
+    link: null,
+  },
+  {
+    type: 'experience',
+    date: '2019-06 – 2020-12',
+    title: 'Frontend Developer',
+    company: 'TechHub Ltd.',
+    description: 'Built and maintained responsive B2B dashboards using React and TypeScript. Improved page load time by 40% through code splitting and lazy loading.',
+    image: null,
+    link: null,
+  },
+  {
+    type: 'project',
+    date: '2022-03 – 2022-08',
+    title: 'Arm MOOC Platform',
+    description: 'Developed an interactive online course platform for ARM architecture, featuring real-time code execution and progress tracking.',
+    image: null,
+    link: null,
+  },
+  {
+    type: 'project',
+    date: '2021-10 – 2022-02',
+    title: 'Wealthskey',
+    description: 'A wealth management dashboard with Next.js and D3.js visualizations. Integrated with multiple financial APIs for real-time portfolio tracking.',
+    image: null,
+    link: null,
+  },
+  {
+    type: 'project',
+    date: '2020-03 – 2020-06',
+    title: 'Arduino Gameboy',
+    description: 'Built a custom handheld game console using Arduino, C/C++, and an OLED display. Programmed classic games like Tetris and Snake from scratch.',
+    image: null,
+    link: null,
+  },
+];
+
+export default timelineData;
