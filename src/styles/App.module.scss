@@ -444,15 +444,6 @@ footer h2::after {
   width: 16px;
 }
 
-/* ===== Deprecated ===== */
-.hide {
-  display: none !important;
-}
-
-.resNav, .normNav {
-  display: none;
-}
-
 /* ===== Responsive: Tablet ===== */
 @media (max-width: 768px) {
   .App {
