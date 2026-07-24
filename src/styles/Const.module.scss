@@ -16,6 +16,27 @@
     --breakpoint-sm: 640px;
     --breakpoint-md: 768px;
     --breakpoint-lg: 1024px;
+    --breakpoint-xl: 1440px;
+
+    /* Container */
+    --container-max-width: 1200px;
+
+    /* Nav */
+    --nav-height: 80px;
+
+    /* Animation curves */
+    --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-in-quint: cubic-bezier(0.64, 0, 0.78, 0);
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+    /* Transition durations */
+    --transition-fast: 200ms;
+    --transition-normal: 300ms;
+    --transition-slow: 500ms;
+
+    /* Section spacing */
+    --section-gap: 80px;
 
     /* Spacing scale */
     --space-xs: 4px;
@@ -43,6 +64,9 @@
     --heading-color: var(--primary-header-color);
     --body-color: var(--primary-text-color);
     --muted-color: rgba(47, 202, 166, 0.6);
+
+    /* Focus ring */
+    --focus-ring-color: var(--primary-header-color);
 
     /* Responsive timeline overrides */
     --timeline-touch-target: 44px;
@@ -113,7 +137,7 @@
     border: 1px solid var(--card-border-color);
     border-radius: var(--card-border-radius);
     box-shadow: var(--card-shadow);
-    transition: var(--card-hover-transform) 0.2s, box-shadow 0.2s;
+    transition: transform 0.2s var(--ease-out-expo), box-shadow 0.2s var(--ease-out-expo);
     cursor: pointer;
     min-height: 44px; /* touch target */
 }
@@ -235,7 +259,4 @@
 .timelineContent a,
 .timelineContent .clickable {
     pointer-events: auto;
-    min-height: var(--timeline-touch-target);
-    display: inline-flex;
-    align-items: center;
 }

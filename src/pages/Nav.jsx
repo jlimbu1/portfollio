@@ -34,32 +34,72 @@ function Nav() {
                     className={st.hamburger}
                     onClick={() => setShow(!show)}
                     aria-label="Toggle navigation"
+                    aria-expanded={show}
                 >
                     <FontAwesomeIcon icon={show ? faX : faBars} />
                 </button>
 
-                <nav className={`${st.navLinks} ${show ? st.navOpen : ''}`}>
-                    {[
-                        ['abouts', 'About'],
-                        ['educations', 'Education'],
-                        ['experiences', 'Experience'],
-                        ['projects', 'Projects'],
-                        ['skills', 'Skills'],
-                        ['contacts', 'Contact'],
-                    ].map(([id, label]) => (
-                        <a
-                            key={id}
-                            href={`#${id}`}
-                            className={active === id ? st.navActive : ''}
-                            onClick={closeMenu}
-                        >
-                            {label}
-                        </a>
-                    ))}
+                <nav className={`${st.navLinks} ${show ? st.navLinksOpen : ''}`}>
+                    <ul>
+                        <li>
+                            <a
+                                className={`${st.navLink} ${active === 'abouts' ? st.active : ''}`}
+                                href="#abouts"
+                                onClick={closeMenu}
+                            >
+                                About
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                className={`${st.navLink} ${active === 'educations' ? st.active : ''}`}
+                                href="#educations"
+                                onClick={closeMenu}
+                            >
+                                Education
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                className={`${st.navLink} ${active === 'experiences' ? st.active : ''}`}
+                                href="#experiences"
+                                onClick={closeMenu}
+                            >
+                                Experience
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                className={`${st.navLink} ${active === 'projects' ? st.active : ''}`}
+                                href="#projects"
+                                onClick={closeMenu}
+                            >
+                                Projects
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                className={`${st.navLink} ${active === 'skills' ? st.active : ''}`}
+                                href="#skills"
+                                onClick={closeMenu}
+                            >
+                                Skills
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                className={`${st.navLink} ${active === 'contacts' ? st.active : ''}`}
+                                href="#contacts"
+                                onClick={closeMenu}
+                            >
+                                Contact
+                            </a>
+                        </li>
+                    </ul>
                 </nav>
             </div>
         </header>
-    )
+    );
 }
 
 export default Nav;

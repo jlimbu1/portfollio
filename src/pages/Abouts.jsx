@@ -23,4 +23,4 @@ function Abouts() {
     )
 }
 
-export default Abouts;
+export default Abouts
