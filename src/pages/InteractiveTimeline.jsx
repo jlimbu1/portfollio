@@ -418,17 +418,19 @@ const TimelineNode = React.memo(({ item, isExpanded, onToggle, index }) => {
       >
         <div style={styles.nodeHeader}>
           <div style={styles.nodeTitleGroup}>
-            <h4 style={styles.nodeTitle}>{item.title}</h4>
+            <h3 style={styles.nodeTitle}>{item.title}</h3>
             <p style={styles.nodeSubtitle}>
-              {item.institution || item.company || item.technologies}
+              {item.type === 'education'
+                ? item.institution
+                : item.type === 'experience'
+                ? item.company
+                : item.technologies}
             </p>
             <div style={styles.nodeMeta}>
-              {item.date && (
-                <span style={styles.nodeMetaItem}>
-                  <FontAwesomeIcon icon={faCalendarAlt} size="sm" />
-                  <span>{item.date}</span>
-                </span>
-              )}
+              <span style={styles.nodeMetaItem}>
+                <FontAwesomeIcon icon={faCalendarAlt} size="sm" />
+                <span>{item.date}</span>
+              </span>
               {item.location && (
                 <span style={styles.nodeMetaItem}>
                   <FontAwesomeIcon icon={faMapMarkerAlt} size="sm" />
