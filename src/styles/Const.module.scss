@@ -1,11 +1,11 @@
 // src/styles/Const.module.scss
 :root {
-    --primary-header-color: #97ffe7;
-    --primary-color: #020c1b;
-    --primary-text-color: #2fcaa6;
+    --primary-header-color: #1a202c;
+    --primary-color: #ffffff;
+    --primary-text-color: #1a202c;
 
     /* Timeline */
-    --timeline-line-color: rgba(47, 202, 166, 0.25);
+    --timeline-line-color: rgba(26, 32, 44, 0.15);
     --timeline-dot-color: var(--primary-header-color);
     --timeline-active-color: var(--primary-header-color);
     --timeline-dot-size: 12px;
@@ -51,12 +51,12 @@
     --section-padding-x: var(--space-lg);
 
     /* Cards */
-    --card-bg: rgba(2, 12, 27, 0.8);
-    --card-border-color: rgba(47, 202, 166, 0.15);
+    --card-bg: #f7fafc;
+    --card-border-color: #e2e8f0;
     --card-border-radius: 12px;
-    --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     --card-hover-transform: translateY(-4px);
-    --card-hover-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    --card-hover-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
 
     /* Typography */
     --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
@@ -64,10 +64,10 @@
     --line-height: 1.6;
     --heading-color: var(--primary-header-color);
     --body-color: var(--primary-text-color);
-    --muted-color: rgba(47, 202, 166, 0.6);
+    --muted-color: #718096;
 
     /* Focus ring */
-    --focus-ring-color: var(--primary-header-color);
+    --focus-ring-color: #3182ce;
 
     /* Responsive timeline overrides */
     --timeline-touch-target: 44px;
@@ -146,7 +146,7 @@
 .timelineContent:hover {
     transform: var(--card-hover-transform);
     box-shadow: var(--card-hover-shadow);
-    border-color: rgba(151, 255, 231, 0.3);
+    border-color: rgba(26, 32, 44, 0.15);
 }
 
 /* Mobile: stack vertically, no alternating */
@@ -351,8 +351,8 @@ body {
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--primary-color, #020c1b);
-  color: var(--primary-text-color, #2fcaa6);
+  background-color: var(--primary-color, #ffffff);
+  color: var(--primary-text-color, #1a202c);
   overflow-x: hidden;
   transition: color 0.3s ease, background-color 0.3s ease;
 }
@@ -371,16 +371,16 @@ img {
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(47, 202, 166, 0.05);
+  background: rgba(26, 32, 44, 0.05);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(47, 202, 166, 0.3);
+  background: rgba(26, 32, 44, 0.3);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(47, 202, 166, 0.5);
+  background: rgba(26, 32, 44, 0.5);
 }
 
 @media (max-width: 768px) {
@@ -406,8 +406,8 @@ img {
 }
 
 @keyframes glowPulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(151, 255, 231, 0); }
-  50%      { box-shadow: 0 0 0 1px rgba(151, 255, 231, 0.12); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(49, 130, 206, 0); }
+  50%      { box-shadow: 0 0 0 1px rgba(49, 130, 206, 0.12); }
 }
 
 /* ===== Reset & Base ===== */
@@ -459,7 +459,7 @@ h2::after {
   content: '';
   flex: 1;
   height: 1px;
-  background: linear-gradient(to right, rgba(47, 202, 166, 0.25), transparent);
+  background: linear-gradient(to right, rgba(26, 32, 44, 0.2), transparent);
 }
 
 p, span, li {
