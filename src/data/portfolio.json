@@ -1,0 +1,12 @@
+{
+  "about": {
+    "name": "Jimmy Limbu",
+    "image": "https://i.imgur.com/8wtSgQm.jpg",
+    "heading": "About",
+    "subtitle": "Software Engineer",
+    "phone": "+852 54980873",
+    "email": "limbujimmy1@gmail.com",
+    "location": "Mong Kok, Hong Kong",
+    "bio": "Software engineer with 4+ years of experience shipping products across B2B platforms, SaaS tools, ERP systems, and consumer-facing applications. Strongest in Vue 3 and frontend architecture, with a data-driven approach and full-stack capability. Currently leading development of 3D jewellery configurators and a white-label multi-tenant platform at DIY ROCKS."
+  }
+}
