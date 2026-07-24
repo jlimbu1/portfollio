@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen, act } from '@testing-library/react';
 import App from '../App';
 import tokens from '../styles/Const.module.scss';
+import portfolioData from '../data/portfolio.json';
 
 describe('Responsive Layout Tests', () => {
   const setViewport = (width) => {
@@ -73,5 +74,40 @@ describe('Responsive Layout Tests', () => {
     expect(tokens).toHaveProperty('timelineNode');
     expect(tokens).toHaveProperty('timelineDot');
     expect(tokens).toHaveProperty('timelineContent');
+  });
+
+  it('renders Abouts content from portfolio.json', () => {
+    renderAppAndCheck();
+    const aboutData = portfolioData.abouts;
+    expect(screen.getByText(aboutData.title)).toBeInTheDocument();
+    expect(screen.getByText(aboutData.subtitle)).toBeInTheDocument();
+    expect(screen.getByText(aboutData.description)).toBeInTheDocument();
+    expect(screen.getByText(aboutData.phone)).toBeInTheDocument();
+    expect(screen.getByText(aboutData.email)).toBeInTheDocument();
+    expect(screen.getByText(aboutData.location)).toBeInTheDocument();
+  });
+
+  it('renders Footer content from portfolio.json', () => {
+    renderAppAndCheck();
+    const footerData = portfolioData.footer;
+    expect(screen.getByText(footerData.title)).toBeInTheDocument();
+    expect(screen.getByText(footerData.phone)).toBeInTheDocument();
+    expect(screen.getByText(footerData.email)).toBeInTheDocument();
+  });
+
+  it('applies design tokens to Abouts section', () => {
+    renderAppAndCheck();
+    const aboutsSection = screen.getByText(/About/i).closest('div');
+    expect(aboutsSection).toHaveStyle({
+      padding: 'var(--section-padding-y, 64px) var(--section-padding-x, 16px)',
+    });
+  });
+
+  it('applies design tokens to Footer section', () => {
+    renderAppAndCheck();
+    const footerSection = screen.getByText(/Contact/i).closest('footer');
+    expect(footerSection).toHaveStyle({
+      padding: 'var(--section-padding-y, 64px) var(--section-padding-x, 16px)',
+    });
   });
 });
