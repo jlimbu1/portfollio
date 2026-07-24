@@ -2,4 +2,18 @@
     --primary-header-color: #97ffe7;
     --primary-color: #020c1b;
     --primary-text-color: #2fcaa6;
+
+    /* Timeline */
+    --timeline-line-color: rgba(47, 202, 166, 0.25);
+    --timeline-dot-color: var(--primary-header-color);
+    --timeline-active-color: var(--primary-header-color);
+    --timeline-dot-size: 12px;
+    --timeline-line-width: 2px;
+    --timeline-node-gap: 32px;
+    --timeline-padding: 16px;
+
+    /* Responsive breakpoints */
+    --breakpoint-sm: 640px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 1024px;
 }
