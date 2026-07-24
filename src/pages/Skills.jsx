@@ -8,8 +8,20 @@ const scrollTo = (id) => {
 
 function Chip({ icon, label, target }) {
     return (
-        <li onClick={() => target && scrollTo(target)} title={target ? `Jump to ${label} usage` : ''}>
-            {icon && <i className={icon}></i>}
+        <li 
+            onClick={() => target && scrollTo(target)} 
+            title={target ? `Jump to ${label} usage` : ''}
+            role="button"
+            tabIndex={0}
+            aria-label={target ? `${label}: jump to ${target} section` : label}
+            onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    if (target) scrollTo(target);
+                }
+            }}
+        >
+            {icon && <i className={icon} aria-hidden="true"></i>}
             {label}
         </li>
     );
@@ -19,12 +31,12 @@ function Skills() {
     const [ref, visible] = useScrollReveal();
 
     return (
-        <div id='skills' className={st.container}>
+        <div id='skills' className={st.container} role="region" aria-label="Skills section">
             <div ref={ref} className={`${st.reveal} ${visible ? st.visible : ''}`}>
-            <h2>Skills</h2>
+            <h2 id="skills-heading">Skills</h2>
 
-            <h4>Programming Languages</h4>
-            <div className={st.skills}>
+            <h4 id="skills-languages-heading">Programming Languages</h4>
+            <div className={st.skills} role="list" aria-labelledby="skills-languages-heading">
                 <ul>
                     <Chip icon="devicon-c-plain" label="C" target="arduino-gameboy" />
                     <Chip icon="devicon-cplusplus-plain" label="C++" target="arduino-gameboy" />
@@ -35,8 +47,8 @@ function Skills() {
                 </ul>
             </div>
 
-            <h4>Frontend</h4>
-            <div className={st.skills}>
+            <h4 id="skills-frontend-heading">Frontend</h4>
+            <div className={st.skills} role="list" aria-labelledby="skills-frontend-heading">
                 <ul>
                     <Chip icon="devicon-vuejs-plain-wordmark" label="Vue 2/3" target="experiences" />
                     <Chip icon="devicon-react-original-wordmark" label="React" target="wealthskey" />
@@ -49,8 +61,8 @@ function Skills() {
                 </ul>
             </div>
 
-            <h4>Backend &amp; Database</h4>
-            <div className={st.skills}>
+            <h4 id="skills-backend-heading">Backend &amp; Database</h4>
+            <div className={st.skills} role="list" aria-labelledby="skills-backend-heading">
                 <ul>
                     <Chip icon="devicon-express-original" label="ExpressJS" target="arm-mooc" />
                     <Chip icon="devicon-nestjs-plain" label="NestJS" target="fletrix" />
@@ -61,8 +73,8 @@ function Skills() {
                 </ul>
             </div>
 
-            <h4>Tools &amp; Platforms</h4>
-            <div className={st.skills}>
+            <h4 id="skills-tools-heading">Tools &amp; Platforms</h4>
+            <div className={st.skills} role="list" aria-labelledby="skills-tools-heading">
                 <ul>
                     <Chip icon="devicon-docker-plain" label="Docker" target="arm-mooc" />
                     <Chip icon="devicon-kubernetes-plain" label="Kubernetes" target="arm-mooc" />
@@ -73,12 +85,12 @@ function Skills() {
                 </ul>
             </div>
 
-            <h4>Spoken Languages</h4>
-            <div className={st.skills}>
+            <h4 id="skills-spoken-heading">Spoken Languages</h4>
+            <div className={st.skills} role="list" aria-labelledby="skills-spoken-heading">
                 <ul>
-                    <li className={st.noAction}>English (Fluent)</li>
-                    <li className={st.noAction}>Nepali (Native)</li>
-                    <li className={st.noAction}>Cantonese (Conversational)</li>
+                    <li className={st.noAction} role="listitem">English (Fluent)</li>
+                    <li className={st.noAction} role="listitem">Nepali (Native)</li>
+                    <li className={st.noAction} role="listitem">Cantonese (Conversational)</li>
                 </ul>
             </div>
         </div>

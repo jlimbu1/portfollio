@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGraduationCap, faBriefcase, faProjectDiagram, faExternalLinkAlt, faChevronDown, faChevronUp, faCalendarAlt, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 
@@ -448,21 +448,22 @@ const TimelineNode = React.memo(({ item, isExpanded, onToggle, index }) => {
               e.stopPropagation();
               onToggle(item.id);
             }}
-            aria-label={isExpanded ? 'Collapse details' : 'Expand details'}
+            aria-label={isExpanded ? `Collapse details for ${item.title}` : `Expand details for ${item.title}`}
             tabIndex={-1}
           >
             <FontAwesomeIcon icon={faChevronDown} />
           </button>
         </div>
         <div
-          id={`timeline-details-${item.id}`}
           ref={detailsRef}
+          id={`timeline-details-${item.id}`}
           style={{
             ...styles.nodeDetails,
             ...(isExpanded ? styles.nodeDetailsOpen : {}),
           }}
           role="region"
           aria-hidden={!isExpanded}
+          tabIndex={isExpanded ? 0 : -1}
         >
           {item.description && (
             <p style={styles.nodeDescription}>{item.description}</p>
@@ -501,6 +502,7 @@ TimelineNode.displayName = 'TimelineNode';
 const InteractiveTimeline = () => {
   const [activeCategory, setActiveCategory] = useState('all');
   const [expandedId, setExpandedId] = useState(null);
+  const nodeRefs = useRef([]);
 
   const filteredItems = useMemo(() => {
     const items =
@@ -519,8 +521,13 @@ const InteractiveTimeline = () => {
     setExpandedId(null);
   }, []);
 
+  // Reset node refs when filtered items change
+  useEffect(() => {
+    nodeRefs.current = nodeRefs.current.slice(0, filteredItems.length);
+  }, [filteredItems.length]);
+
   return (
-    <section className="timeline" style={styles.section}>
+    <section className="timeline" style={styles.section} aria-label="Experience and Education Timeline">
       <div style={styles.header}>
         <h2 style={styles.heading}>
           <FontAwesomeIcon icon={faProjectDiagram} />
@@ -560,7 +567,7 @@ const InteractiveTimeline = () => {
         <div style={styles.timelineLine} aria-hidden="true" />
 
         {filteredItems.length === 0 ? (
-          <div style={styles.emptyState}>
+          <div style={styles.emptyState} role="status" aria-live="polite">
             <div style={styles.emptyStateIcon}>
               <FontAwesomeIcon icon={faProjectDiagram} />
             </div>
@@ -574,6 +581,7 @@ const InteractiveTimeline = () => {
               index={index}
               isExpanded={expandedId === item.id}
               onToggle={handleToggle}
+              nodeRefs={nodeRefs}
             />
           ))
         )}
