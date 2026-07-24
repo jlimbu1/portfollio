@@ -1,40 +1,33 @@
 import { useState, useEffect, useRef } from 'react';
 
 export default function useScrollSpy(sectionIds, options = {}) {
-    // Backward compatibility: if second argument is a number, treat it as offset
     if (typeof options === 'number') {
         options = { offset: options };
     }
-
     const { offset = 100, threshold = 0 } = options;
-    const [active, setActive] = useState(sectionIds[0] || '');
 
-    // Use IntersectionObserver when a threshold > 0 is specified
-    if (threshold > 0) {
-        return useIntersectionSpy(sectionIds, threshold);
-    }
+    // Always call hooks at top level — never conditionally
+    const intersectionActive = useIntersectionSpy(sectionIds, threshold);
+    const [scrollActive, setScrollActive] = useState(sectionIds[0] || '');
 
-    // Fallback to scroll-based detection
     useEffect(() => {
         const handleScroll = () => {
             const scrollY = window.scrollY + offset;
             let current = sectionIds[0] || '';
-
             for (const id of sectionIds) {
                 const el = document.getElementById(id);
                 if (el && el.offsetTop <= scrollY) {
                     current = id;
                 }
             }
-            setActive(current);
+            setScrollActive(current);
         };
-
         handleScroll();
         window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
     }, [sectionIds, offset]);
 
-    return active;
+    return threshold > 0 ? intersectionActive : scrollActive;
 }
 
 function useIntersectionSpy(sectionIds, threshold) {
@@ -43,7 +36,6 @@ function useIntersectionSpy(sectionIds, threshold) {
 
     useEffect(() => {
         if (sectionIds.length === 0) return;
-
         const observer = new IntersectionObserver(
             (entries) => {
                 const visible = entries
@@ -55,14 +47,11 @@ function useIntersectionSpy(sectionIds, threshold) {
             },
             { threshold }
         );
-
         sectionIds.forEach(id => {
             const el = document.getElementById(id);
             if (el) observer.observe(el);
         });
-
         observerRef.current = observer;
-
         return () => observer.disconnect();
     }, [sectionIds, threshold]);
 
