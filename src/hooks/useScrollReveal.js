@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
-export default function useScrollReveal(threshold = 0.1) {
+export default function useScrollReveal(threshold = 0.1, options = {}) {
+    const { stagger = 0, direction = 'up' } = options;
     const ref = useRef(null);
     const [visible, setVisible] = useState(false);
 
@@ -22,5 +23,19 @@ export default function useScrollReveal(threshold = 0.1) {
         return () => observer.disconnect();
     }, [threshold]);
 
-    return [ref, visible];
+    const fromTransform = {
+        up: 'translateY(40px)',
+        down: 'translateY(-40px)',
+        left: 'translateX(-40px)',
+        right: 'translateX(40px)',
+    }[direction] || 'translateY(40px)';
+
+    const style = {
+        opacity: visible ? 1 : 0,
+        transform: visible ? 'translate(0,0)' : fromTransform,
+        transition: `opacity 0.6s ease-out, transform 0.6s ease-out`,
+        transitionDelay: visible ? `${stagger}ms` : '0ms',
+    };
+
+    return [ref, visible, style];
 }

@@ -9,6 +9,69 @@ html {
   scroll-padding-top: 80px;
 }
 
+:root {
+  /* Design Tokens – fallback values synchronised with Const.module.scss */
+  --primary-color: #020c1b;
+  --primary-header-color: #97ffe7;
+  --primary-text-color: #2fcaa6;
+
+  --timeline-line-color: rgba(47, 202, 166, 0.25);
+  --timeline-dot-color: var(--primary-header-color);
+  --timeline-active-color: var(--primary-header-color);
+  --timeline-dot-size: 12px;
+  --timeline-line-width: 2px;
+  --timeline-node-gap: 32px;
+  --timeline-padding: 16px;
+
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1440px;
+
+  --container-max-width: 1200px;
+  --nav-height: 80px;
+
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-quint: cubic-bezier(0.64, 0, 0.78, 0);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --transition-fast: 200ms;
+  --transition-normal: 300ms;
+  --transition-slow: 500ms;
+
+  --section-gap: 80px;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 32px;
+  --space-xl: 64px;
+  --section-padding-y: var(--space-xl);
+  --section-padding-x: var(--space-lg);
+
+  --card-bg: rgba(2, 12, 27, 0.8);
+  --card-border-color: rgba(47, 202, 166, 0.15);
+  --card-border-radius: 12px;
+  --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  --card-hover-transform: translateY(-4px);
+  --card-hover-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+
+  --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  --font-family-mono: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  --line-height: 1.6;
+  --heading-color: var(--primary-header-color);
+  --body-color: var(--primary-text-color);
+  --muted-color: rgba(47, 202, 166, 0.6);
+
+  --focus-ring-color: var(--primary-header-color);
+  --timeline-touch-target: 44px;
+  --timeline-mobile-padding: 12px;
+  --timeline-mobile-font-size: 0.85rem;
+  --timeline-mobile-dot-size: 10px;
+  --timeline-mobile-line-width: 2px;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -48,8 +111,63 @@ img {
   background: rgba(47, 202, 166, 0.5);
 }
 
-@media (max-width: 768px) {
+/* ===== Shared Animation Keyframes ===== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideRight {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ===== Responsive Container Grid ===== */
+.app-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--section-gap, 80px);
+  max-width: var(--container-max-width, 1200px);
+  margin: 0 auto;
+  padding: var(--section-padding-y, 64px) var(--section-padding-x, 32px);
+}
+
+@media (max-width: calc(var(--breakpoint-md, 768px) - 1px)) {
+  .app-container {
+    padding: var(--space-lg, 32px) var(--space-md, 16px);
+    gap: calc(var(--section-gap, 80px) * 0.75);
+  }
+
   html {
     scroll-padding-top: 70px;
+  }
+}
+
+@media (min-width: var(--breakpoint-lg, 1024px)) {
+  .app-container {
+    padding: var(--space-xl, 64px) var(--space-xl, 64px);
   }
 }
