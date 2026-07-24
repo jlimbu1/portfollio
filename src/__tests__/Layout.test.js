@@ -53,17 +53,25 @@ describe('Responsive Layout Tests', () => {
     });
   });
 
+  it('applies light theme colors to body', () => {
+    renderAppAndCheck();
+    const body = document.body;
+    const bodyStyle = window.getComputedStyle(body);
+    // Expect white background
+    expect(bodyStyle.backgroundColor).toBe('rgb(255, 255, 255)');
+    // Expect dark text
+    expect(bodyStyle.color).toBe('rgb(10, 25, 47)');
+  });
+
   it('validates Const.module.scss exports', () => {
     expect(tokens).toBeDefined();
     expect(typeof tokens).toBe('object');
     expect(Object.keys(tokens).length).toBeGreaterThan(0);
-    expect(tokens).toHaveProperty('colorPrimary');
-    expect(tokens).toHaveProperty('breakpointSm');
-    expect(tokens).toHaveProperty('breakpointMd');
-    expect(tokens).toHaveProperty('breakpointLg');
-    expect(tokens).toHaveProperty('colorSecondary');
-    expect(tokens).toHaveProperty('fontPrimary');
-    expect(tokens).toHaveProperty('spacingUnit');
-    expect(tokens).toHaveProperty('colorText');
+    // Verify that a known class name is exported
+    expect(tokens).toHaveProperty('timelineContainer');
+    expect(tokens).toHaveProperty('timelineLine');
+    expect(tokens).toHaveProperty('timelineNode');
+    expect(tokens).toHaveProperty('timelineDot');
+    expect(tokens).toHaveProperty('timelineContent');
   });
 });
