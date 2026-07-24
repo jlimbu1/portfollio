@@ -58,6 +58,13 @@ function Timeline() {
     setExpandedIndex((prev) => (prev === index ? null : index));
   };
 
+  const handleKeyDown = (e, index) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleToggle(index);
+    }
+  };
+
   return (
     <section id="timeline" className={st.container}>
       <div
@@ -66,36 +73,45 @@ function Timeline() {
       >
         <h2>Timeline</h2>
         <div className={st.timeline}>
-          {timelineData.map((entry, index) => (
-            <div
-              key={entry.id}
-              className={`${st.node} ${expandedIndex === index ? st.expanded : ''}`}
-              onClick={() => handleToggle(index)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  handleToggle(index);
-                }
-              }}
-              aria-expanded={expandedIndex === index}
-            >
-              <div className={st.dot}>
-                <span className={st.dotInner} />
-              </div>
-              <div className={st.line} />
-              <div className={st.content}>
-                <div className={st.header}>
-                  <span className={st.date}>{entry.date}</span>
-                  <h3>{entry.title}</h3>
-                  <p className={st.subtitle}>{entry.subtitle}</p>
+          {timelineData.map((entry, index) => {
+            const isExpanded = expandedIndex === index;
+            return (
+              <div
+                key={entry.id}
+                className={`${st.node} ${isExpanded ? st.expanded : ''}`}
+                onClick={() => handleToggle(index)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => handleKeyDown(e, index)}
+                aria-expanded={isExpanded}
+                aria-controls={`timeline-details-${entry.id}`}
+              >
+                <div className={st.dot}>
+                  <span className={st.dotInner} />
                 </div>
-                <div className={st.body}>
-                  <p>{entry.description}</p>
+                <div className={st.line} />
+                <div className={st.content}>
+                  <div className={st.header}>
+                    <span className={st.date}>{entry.date}</span>
+                    <h3>{entry.title}</h3>
+                    <p className={st.subtitle}>{entry.subtitle}</p>
+                  </div>
+                  <div
+                    id={`timeline-details-${entry.id}`}
+                    className={`${st.body} ${isExpanded ? st.bodyExpanded : ''}`}
+                    style={{
+                      maxHeight: isExpanded ? '200px' : '0',
+                      overflow: 'hidden',
+                      transition: 'max-height 0.4s ease, opacity 0.4s ease',
+                      opacity: isExpanded ? 1 : 0,
+                    }}
+                  >
+                    <p>{entry.description}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
