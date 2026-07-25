@@ -17,6 +17,11 @@
   50%      { box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.12); }
 }
 
+@keyframes fillBar {
+  from { width: 0; }
+  to { width: var(--bar-width); }
+}
+
 /* ===== Reset & Base ===== */
 *,
 *::before,
@@ -374,6 +379,79 @@ p, span, li {
   font-size: 1.3rem;
 }
 
+/* ===== Skills Progress Bars ===== */
+.skillBars {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.skillBarGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.skillBarLabel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.88rem;
+  color: var(--primary-text-color);
+}
+
+.skillBarLabelLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.skillBarLabelLeft i {
+  font-size: 1.2rem;
+  color: var(--primary-header-color);
+  opacity: 0.8;
+}
+
+.skillBarPercent {
+  font-size: 0.8rem;
+  color: rgba(151, 255, 231, 0.7);
+  font-weight: 500;
+}
+
+.skillBarTrack {
+  width: 100%;
+  height: 8px;
+  background: rgba(47, 202, 166, 0.08);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.skillBarFill {
+  height: 100%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, rgba(47, 202, 166, 0.7), rgba(151, 255, 231, 0.9));
+  width: 0;
+  transition: width 0s;
+}
+
+.skillBarFill.animated {
+  animation: fillBar 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* Stagger bar animations */
+.skillBarGroup:nth-child(1) .skillBarFill.animated { animation-delay: 0.05s; }
+.skillBarGroup:nth-child(2) .skillBarFill.animated { animation-delay: 0.1s; }
+.skillBarGroup:nth-child(3) .skillBarFill.animated { animation-delay: 0.15s; }
+.skillBarGroup:nth-child(4) .skillBarFill.animated { animation-delay: 0.2s; }
+.skillBarGroup:nth-child(5) .skillBarFill.animated { animation-delay: 0.25s; }
+.skillBarGroup:nth-child(6) .skillBarFill.animated { animation-delay: 0.3s; }
+.skillBarGroup:nth-child(7) .skillBarFill.animated { animation-delay: 0.35s; }
+.skillBarGroup:nth-child(8) .skillBarFill.animated { animation-delay: 0.4s; }
+.skillBarGroup:nth-child(9) .skillBarFill.animated { animation-delay: 0.45s; }
+.skillBarGroup:nth-child(10) .skillBarFill.animated { animation-delay: 0.5s; }
+.skillBarGroup:nth-child(11) .skillBarFill.animated { animation-delay: 0.55s; }
+.skillBarGroup:nth-child(12) .skillBarFill.animated { animation-delay: 0.6s; }
+
 /* ===== Footer ===== */
 footer {
   text-align: center;
@@ -557,6 +635,18 @@ footer h2::after {
     padding: 6px 12px;
     font-size: 0.82rem;
   }
+
+  .skillBars {
+    gap: 12px;
+  }
+
+  .skillBarLabel {
+    font-size: 0.82rem;
+  }
+
+  .skillBarTrack {
+    height: 6px;
+  }
 }
 
 /* ===== Responsive: Phone ===== */
@@ -593,6 +683,22 @@ footer h2::after {
 
   .skills i {
     font-size: 1.1rem;
+  }
+
+  .skillBars {
+    gap: 10px;
+  }
+
+  .skillBarLabel {
+    font-size: 0.78rem;
+  }
+
+  .skillBarLabelLeft i {
+    font-size: 1rem;
+  }
+
+  .skillBarTrack {
+    height: 6px;
   }
 
   .socialLinks {
