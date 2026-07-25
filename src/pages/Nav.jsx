@@ -23,6 +23,10 @@ function Nav() {
 
     const closeMenu = () => setShow(false);
 
+    const toggleMenu = useCallback(() => {
+        setShow(prev => !prev);
+    }, []);
+
     return (
         <header className={`${st.nav} ${scrolled ? st.navScrolled : ''}`}>
             <div className={st.navInner}>
@@ -32,8 +36,13 @@ function Nav() {
 
                 <button
                     className={st.hamburger}
-                    onClick={() => setShow(!show)}
+                    onClick={toggleMenu}
+                    onTouchEnd={(e) => {
+                        e.preventDefault();
+                        toggleMenu();
+                    }}
                     aria-label="Toggle navigation"
+                    aria-expanded={show}
                 >
                     <FontAwesomeIcon icon={show ? faX : faBars} />
                 </button>
