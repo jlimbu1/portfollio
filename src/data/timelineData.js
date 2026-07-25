@@ -73,21 +73,7 @@ export const projectData = [
     title: "Danger Dungeon",
     date: "2022",
     description:
-      "Multiplayer online dungeon crawler game built with Java and Socket.IO. Features real-time multiplayer combat, procedural dungeon generation, and persistent player statistics. Implemented client-server architecture with authoritative game state.",
+      "Multiplayer online dungeon crawler game built with Java and LibGDX. Features procedurally generated dungeons, real-time multiplayer combat, and loot systems. Deployed using custom server architecture.",
     type: "project",
   },
-  {
-    id: "proj-4",
-    title: "Portfolio Website",
-    date: "2024",
-    description:
-      "Personal portfolio website showcasing professional experience, education, and projects. Built with React, TypeScript, and SCSS modules. Features responsive design, scroll animations, and interactive timeline visualization.",
-    type: "project",
-  },
-];
-
-export const timelineData = [
-  ...educationData.map((item) => ({ ...item, sortDate: item.date })),
-  ...experienceData.map((item) => ({ ...item, sortDate: item.date })),
-  ...projectData.map((item) => ({ ...item, sortDate: item.date })),
 ];
