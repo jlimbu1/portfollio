@@ -55,31 +55,57 @@ const scrollTo = (id) => {
     if (el) el.scrollIntoView({ behavior: 'smooth' });
 };
 
-function SkillBar({ icon, label, proficiency, target }) {
+function SkillRing({ icon, label, proficiency, target, index }) {
     const [ref, visible] = useScrollReveal();
+    const radius = 42;
+    const circumference = 2 * Math.PI * radius;
+    const offset = circumference - (proficiency / 100) * circumference;
 
     const handleClick = () => {
         if (target) scrollTo(target);
     };
 
     return (
-        <li
+        <div
             ref={ref}
-            className={`${st.skillBarItem} ${visible ? st.skillBarVisible : ''} ${target ? '' : st.noAction}`}
+            className={`${st.skillRing} ${visible ? st.skillRingVisible : ''} ${target ? st.skillRingClickable : st.noAction}`}
             onClick={handleClick}
-            title={target ? `Jump to ${label} usage` : ''}
+            title={target ? `Jump to ${label} usage` : `${label}: ${proficiency}%`}
+            style={{ transitionDelay: `${index * 0.08}s` }}
         >
-            <div className={st.skillBarHeader}>
-                {icon && <i className={icon}></i>}
-                <span className={st.skillBarLabel}>{label}</span>
+            <svg className={st.skillRingSvg} viewBox="0 0 100 100">
+                <circle
+                    className={st.skillRingBg}
+                    cx="50"
+                    cy="50"
+                    r={radius}
+                    fill="none"
+                    strokeWidth="6"
+                />
+                <circle
+                    className={st.skillRingProgress}
+                    cx="50"
+                    cy="50"
+                    r={radius}
+                    fill="none"
+                    strokeWidth="6"
+                    strokeLinecap="round"
+                    strokeDasharray={circumference}
+                    strokeDashoffset={visible ? offset : circumference}
+                    style={{
+                        transition: `stroke-dashoffset 1.2s ease-out ${index * 0.08}s`,
+                    }}
+                />
+            </svg>
+            <div className={st.skillRingContent}>
+                {icon && <i className={`${icon} ${st.skillRingIcon}`}></i>}
+                {!icon && <span className={st.skillRingLabelOnly}>{label}</span>}
             </div>
-            <div className={st.skillBarTrack}>
-                <div
-                    className={st.skillBarFill}
-                    style={{ '--proficiency-width': `${proficiency}%` }}
-                ></div>
+            <div className={st.skillRingTooltip}>
+                <span className={st.skillRingTooltipLabel}>{label}</span>
+                <span className={st.skillRingTooltipPct}>{proficiency}%</span>
             </div>
-        </li>
+        </div>
     );
 }
 
@@ -89,36 +115,35 @@ function Skills() {
     return (
         <div id='skills' className={st.container}>
             <div ref={ref} className={`${st.reveal} ${visible ? st.visible : ''}`}>
-            <h2>Skills</h2>
+                <h2>Skills</h2>
 
-            {skillCategories.map((category) => (
-                <div key={category.title}>
-                    <h4>{category.title}</h4>
-                    <div className={st.skills}>
-                        <ul>
-                            {category.skills.map((skill) => (
-                                <SkillBar
+                {skillCategories.map((category) => (
+                    <div key={category.title} className={st.skillCategory}>
+                        <h4 className={st.skillCategoryTitle}>{category.title}</h4>
+                        <div className={st.skillRingsGrid}>
+                            {category.skills.map((skill, idx) => (
+                                <SkillRing
                                     key={skill.label}
                                     icon={skill.icon}
                                     label={skill.label}
                                     proficiency={skill.proficiency}
                                     target={skill.target}
+                                    index={idx}
                                 />
                             ))}
-                        </ul>
+                        </div>
                     </div>
-                </div>
-            ))}
+                ))}
 
-            <h4>Spoken Languages</h4>
-            <div className={st.skills}>
-                <ul>
-                    <li className={st.noAction}>English (Fluent)</li>
-                    <li className={st.noAction}>Nepali (Native)</li>
-                    <li className={st.noAction}>Cantonese (Conversational)</li>
-                </ul>
+                <h4 className={st.skillCategoryTitle}>Spoken Languages</h4>
+                <div className={st.skills}>
+                    <ul>
+                        <li className={st.noAction}>English (Fluent)</li>
+                        <li className={st.noAction}>Nepali (Native)</li>
+                        <li className={st.noAction}>Cantonese (Conversational)</li>
+                    </ul>
+                </div>
             </div>
-        </div>
         </div>
     )
 }
