@@ -1,22 +1,73 @@
 :root {
-    --primary-header-color: #0f172a;
-    --primary-color: #f8fafc;
-    --primary-text-color: #1e293b;
-    --primary-accent-color: #0ea5e9;
-    --primary-accent-hover: #0284c7;
+    --primary-header-color: #1a1a2e;
+    --primary-color: #fafbfc;
+    --primary-text-color: #2d3748;
+    --primary-accent-color: #2563eb;
+    --primary-accent-hover: #1d4ed8;
     --primary-border-color: #e2e8f0;
     --primary-card-bg: #ffffff;
-    --primary-card-hover-bg: #f1f5f9;
-    --primary-muted-text: #64748b;
-    --primary-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
-    --primary-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.1);
-    --primary-nav-bg: rgba(248, 250, 252, 0.92);
-    --primary-nav-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    --primary-card-hover-bg: #f7fafc;
+    --primary-muted-text: #718096;
+    --primary-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+    --primary-shadow-hover: 0 10px 25px rgba(0, 0, 0, 0.08);
+    --primary-nav-bg: rgba(250, 251, 252, 0.94);
+    --primary-nav-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
     --primary-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     --primary-heading-font-weight: 700;
     --primary-body-font-weight: 400;
     --primary-line-height: 1.7;
-    --primary-border-radius: 8px;
-    --primary-transition-duration: 0.2s;
-    --primary-transition-timing: ease;
+    --primary-border-radius: 10px;
+    --primary-border-radius-sm: 6px;
+    --primary-border-radius-lg: 14px;
+    --primary-transition-duration: 0.25s;
+    --primary-transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+    --primary-section-gap: 80px;
+    --primary-content-max-width: 960px;
+    --primary-timeline-line-color: #cbd5e0;
+    --primary-timeline-dot-color: #2563eb;
+    --primary-timeline-dot-size: 14px;
+    --primary-skill-ring-bg: #edf2f7;
+    --primary-skill-ring-fill: #2563eb;
+    --primary-success-color: #10b981;
+    --primary-warning-color: #f59e0b;
+    --primary-error-color: #ef4444;
+    --primary-gradient-start: #2563eb;
+    --primary-gradient-end: #7c3aed;
+    --primary-hero-gradient: linear-gradient(135deg, #f0f4ff 0%, #fafbfc 50%, #f5f3ff 100%);
+    --primary-card-gradient: linear-gradient(135deg, #ffffff 0%, #f7fafc 100%);
+    --primary-glass-bg: rgba(255, 255, 255, 0.8);
+    --primary-glass-border: rgba(226, 232, 240, 0.6);
+    --primary-glass-blur: 12px;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --primary-header-color: #e2e8f0;
+        --primary-color: #0f172a;
+        --primary-text-color: #cbd5e0;
+        --primary-accent-color: #3b82f6;
+        --primary-accent-hover: #60a5fa;
+        --primary-border-color: #334155;
+        --primary-card-bg: #1e293b;
+        --primary-card-hover-bg: #273548;
+        --primary-muted-text: #94a3b8;
+        --primary-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+        --primary-shadow-hover: 0 10px 25px rgba(0, 0, 0, 0.4);
+        --primary-nav-bg: rgba(15, 23, 42, 0.92);
+        --primary-nav-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        --primary-timeline-line-color: #475569;
+        --primary-timeline-dot-color: #3b82f6;
+        --primary-skill-ring-bg: #334155;
+        --primary-skill-ring-fill: #3b82f6;
+        --primary-hero-gradient: linear-gradient(135deg, #1e293b 0%, #0f172a 50%, #1e1b4b 100%);
+        --primary-card-gradient: linear-gradient(135deg, #1e293b 0%, #273548 100%);
+        --primary-glass-bg: rgba(30, 41, 59, 0.8);
+        --primary-glass-border: rgba(51, 65, 85, 0.6);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --primary-transition-duration: 0s;
+    }
 }

@@ -22,6 +22,44 @@
   to { width: var(--bar-width); }
 }
 
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
 /* ===== Reset & Base ===== */
 *,
 *::before,
@@ -42,12 +80,13 @@ ul {
 }
 
 a {
-  color: var(--primary-header-color);
+  color: var(--primary-accent-color);
   text-decoration: none;
-  transition: color 0.2s;
+  transition: color var(--primary-transition-duration) var(--primary-transition-timing);
 }
 a:hover {
-  text-decoration: underline;
+  color: var(--primary-accent-hover);
+  text-decoration: none;
 }
 
 img {
@@ -58,25 +97,28 @@ img {
 h1, h2, h3, h4 {
   color: var(--primary-header-color);
   margin: 0 0 0.5rem;
+  font-weight: var(--primary-heading-font-weight);
 }
 
 h2 {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   display: flex;
   align-items: center;
   gap: 12px;
+  margin-bottom: 1.5rem;
 }
 
 h2::after {
   content: '';
   flex: 1;
-  height: 1px;
-  background: linear-gradient(to right, rgba(37, 99, 235, 0.25), transparent);
+  height: 2px;
+  background: linear-gradient(to right, var(--primary-accent-color), transparent);
+  opacity: 0.3;
 }
 
 p, span, li {
   color: var(--primary-text-color);
-  line-height: 1.7;
+  line-height: var(--primary-line-height);
 }
 
 /* ===== Scroll reveal ===== */
@@ -100,7 +142,7 @@ p, span, li {
 
 /* ===== Layout ===== */
 .App {
-  max-width: 900px;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 0 24px;
 }
@@ -110,11 +152,33 @@ p, span, li {
 }
 
 .container {
-  padding: 56px 0;
+  padding: 64px 0;
 }
 
 .container + .container {
-  border-top: 1px solid rgba(30, 41, 59, 0.12);
+  border-top: 1px solid var(--primary-border-color);
+}
+
+/* ===== Section Headers ===== */
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.sectionHeader h2 {
+  justify-content: center;
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.sectionHeader h2::after {
+  display: none;
+}
+
+.sectionHeader .sectionSubtitle {
+  color: var(--primary-muted-text);
+  font-size: 1rem;
+  font-weight: 400;
 }
 
 /* ===== Navigation ===== */
@@ -129,13 +193,13 @@ p, span, li {
 }
 
 .navScrolled {
-  background: rgba(248, 250, 252, 0.92);
-  box-shadow: 0 1px 20px rgba(0, 0, 0, 0.08);
-  backdrop-filter: blur(10px);
+  background: var(--primary-nav-bg);
+  box-shadow: var(--primary-nav-shadow);
+  backdrop-filter: blur(12px);
 }
 
 .navInner {
-  max-width: 900px;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 0 24px;
   height: 70px;
@@ -147,9 +211,9 @@ p, span, li {
 .logo img {
   width: 48px;
   height: 48px;
-  border-radius: 4px;
+  border-radius: var(--primary-border-radius);
   object-fit: cover;
-  transition: transform 0.2s;
+  transition: transform var(--primary-transition-duration) var(--primary-transition-timing);
 }
 .logo:hover img {
   transform: scale(1.08);
@@ -163,21 +227,22 @@ p, span, li {
 .navLinks a {
   color: var(--primary-text-color);
   padding: 8px 16px;
-  border-radius: 8px;
+  border-radius: var(--primary-border-radius);
   font-size: 0.9rem;
   font-weight: 500;
   position: relative;
-  transition: color 0.2s, background 0.2s;
+  transition: color var(--primary-transition-duration) var(--primary-transition-timing),
+              background var(--primary-transition-duration) var(--primary-transition-timing);
 }
 .navLinks a:hover {
-  color: var(--primary-header-color);
-  background: rgba(37, 99, 235, 0.08);
+  color: var(--primary-accent-color);
+  background: rgba(14, 165, 233, 0.08);
   text-decoration: none;
 }
 
 .navActive {
-  color: var(--primary-header-color) !important;
-  background: rgba(37, 99, 235, 0.08) !important;
+  color: var(--primary-accent-color) !important;
+  background: rgba(14, 165, 233, 0.08) !important;
 }
 
 .hamburger {
@@ -188,34 +253,36 @@ p, span, li {
   font-size: 1.5rem;
   cursor: pointer;
   padding: 8px;
-  border-radius: 8px;
-  transition: color 0.2s, background 0.2s;
+  border-radius: var(--primary-border-radius);
+  transition: color var(--primary-transition-duration) var(--primary-transition-timing),
+              background var(--primary-transition-duration) var(--primary-transition-timing);
 }
 .hamburger:hover {
-  color: var(--primary-header-color);
-  background: rgba(37, 99, 235, 0.08);
+  color: var(--primary-accent-color);
+  background: rgba(14, 165, 233, 0.08);
 }
 
 /* ===== About ===== */
 .wrapper {
   display: flex;
   flex-wrap: wrap;
-  gap: 32px;
-  align-items: flex-start;
+  gap: 40px;
+  align-items: center;
+  justify-content: center;
 }
 
 .pfp {
-  width: 180px;
-  height: 180px;
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
-  border: 2px solid var(--primary-header-color);
+  border: 3px solid var(--primary-accent-color);
   object-fit: cover;
   flex-shrink: 0;
-  transition: box-shadow 0.4s, transform 0.4s;
+  transition: box-shadow 0.4s ease, transform 0.4s ease;
 }
 .pfp:hover {
-  box-shadow: 0 0 30px rgba(37, 99, 235, 0.2);
-  transform: scale(1.03);
+  box-shadow: 0 0 40px rgba(14, 165, 233, 0.25);
+  transform: scale(1.04);
 }
 
 .abouts {
@@ -224,8 +291,8 @@ p, span, li {
 }
 
 .abouts .subtitle {
-  color: var(--primary-header-color);
-  font-size: 1.1rem;
+  color: var(--primary-accent-color);
+  font-size: 1.15rem;
   font-weight: 600;
   margin-top: -4px;
   margin-bottom: 16px;
@@ -241,31 +308,37 @@ p, span, li {
 
 /* ===== Cards ===== */
 .card {
-  padding: 20px 20px 20px 24px;
+  padding: 24px;
   scroll-margin-top: 90px;
-  border-left: 2px solid transparent;
-  border-radius: 0 8px 8px 0;
-  transition: border-color 0.3s, background 0.3s, transform 0.2s;
+  background: var(--primary-card-bg);
+  border: 1px solid var(--primary-border-color);
+  border-radius: var(--primary-border-radius);
+  box-shadow: var(--primary-shadow);
+  transition: border-color var(--primary-transition-duration) var(--primary-transition-timing),
+              background var(--primary-transition-duration) var(--primary-transition-timing),
+              transform var(--primary-transition-duration) var(--primary-transition-timing),
+              box-shadow var(--primary-transition-duration) var(--primary-transition-timing);
 }
 
 .card:hover {
-  border-left-color: var(--primary-header-color);
-  background: rgba(37, 99, 235, 0.03);
-  transform: translateX(4px);
+  border-color: var(--primary-accent-color);
+  background: var(--primary-card-hover-bg);
+  transform: translateY(-2px);
+  box-shadow: var(--primary-shadow-hover);
 }
 
 .card + .card {
-  margin-top: 28px;
-  border-top: none;
+  margin-top: 24px;
+  border-top: 1px solid var(--primary-border-color);
 }
 
 .card h4 {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   margin-bottom: 8px;
 }
 
 .card .date {
-  color: rgba(30, 41, 59, 0.6);
+  color: var(--primary-muted-text);
   font-size: 0.85rem;
 }
 
@@ -290,24 +363,26 @@ p, span, li {
   display: flex;
   flex-direction: column;
   margin-top: 0;
-  padding: 24px;
-  border-left: none;
-  border-radius: 12px;
-  border: 1px solid rgba(30, 41, 59, 0.08);
-  background: rgba(37, 99, 235, 0.03);
-  transition: border-color 0.3s, background 0.3s, transform 0.2s, box-shadow 0.3s;
+  padding: 28px;
+  border-radius: var(--primary-border-radius);
+  border: 1px solid var(--primary-border-color);
+  background: var(--primary-card-bg);
+  transition: border-color var(--primary-transition-duration) var(--primary-transition-timing),
+              background var(--primary-transition-duration) var(--primary-transition-timing),
+              transform var(--primary-transition-duration) var(--primary-transition-timing),
+              box-shadow var(--primary-transition-duration) var(--primary-transition-timing);
 }
 
 .eduGrid .card:hover {
-  border-color: rgba(37, 99, 235, 0.25);
-  background: rgba(37, 99, 235, 0.04);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  border-color: var(--primary-accent-color);
+  background: var(--primary-card-hover-bg);
+  box-shadow: var(--primary-shadow-hover);
   transform: translateY(-4px);
 }
 
 .eduGrid .card + .card {
   margin-top: 0;
-  border-top: 1px solid rgba(30, 41, 59, 0.08);
+  border-top: 1px solid var(--primary-border-color);
 }
 
 .eduGrid img {
@@ -329,7 +404,7 @@ p, span, li {
   font-size: 0.95rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: rgba(30, 41, 59, 0.7);
+  color: var(--primary-muted-text);
 }
 
 .skills ul {
@@ -342,22 +417,25 @@ p, span, li {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(37, 99, 235, 0.05);
-  border: 1px solid rgba(37, 99, 235, 0.1);
-  border-radius: 8px;
+  background: rgba(14, 165, 233, 0.05);
+  border: 1px solid rgba(14, 165, 233, 0.12);
+  border-radius: var(--primary-border-radius);
   padding: 8px 14px;
   font-size: 0.88rem;
   white-space: nowrap;
   cursor: pointer;
-  transition: border-color 0.2s, background 0.2s, transform 0.15s, box-shadow 0.2s;
+  transition: border-color var(--primary-transition-duration) var(--primary-transition-timing),
+              background var(--primary-transition-duration) var(--primary-transition-timing),
+              transform 0.15s ease,
+              box-shadow var(--primary-transition-duration) var(--primary-transition-timing);
   user-select: none;
 }
 
 .skills li:hover {
-  border-color: var(--primary-header-color);
-  background: rgba(37, 99, 235, 0.08);
+  border-color: var(--primary-accent-color);
+  background: rgba(14, 165, 233, 0.1);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.12);
 }
 
 .skills li:active {
@@ -369,8 +447,8 @@ p, span, li {
 }
 
 .skills .noAction:hover {
-  border-color: rgba(37, 99, 235, 0.1);
-  background: rgba(37, 99, 235, 0.05);
+  border-color: rgba(14, 165, 233, 0.12);
+  background: rgba(14, 165, 233, 0.05);
   transform: none;
   box-shadow: none;
 }
@@ -408,20 +486,20 @@ p, span, li {
 
 .skillBarLabelLeft i {
   font-size: 1.2rem;
-  color: var(--primary-header-color);
+  color: var(--primary-accent-color);
   opacity: 0.8;
 }
 
 .skillBarPercent {
   font-size: 0.8rem;
-  color: rgba(151, 255, 231, 0.7);
+  color: var(--primary-muted-text);
   font-weight: 500;
 }
 
 .skillBarTrack {
   width: 100%;
   height: 8px;
-  background: rgba(47, 202, 166, 0.08);
+  background: rgba(14, 165, 233, 0.08);
   border-radius: 4px;
   overflow: hidden;
 }
@@ -429,7 +507,7 @@ p, span, li {
 .skillBarFill {
   height: 100%;
   border-radius: 4px;
-  background: linear-gradient(90deg, rgba(47, 202, 166, 0.7), rgba(151, 255, 231, 0.9));
+  background: linear-gradient(90deg, var(--primary-accent-color), #38bdf8);
   width: 0;
   transition: width 0s;
 }
@@ -484,16 +562,19 @@ footer h2::after {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: rgba(37, 99, 235, 0.06);
-  border: 1px solid rgba(37, 99, 235, 0.1);
-  transition: background 0.2s, transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  background: rgba(14, 165, 233, 0.06);
+  border: 1px solid rgba(14, 165, 233, 0.12);
+  transition: background var(--primary-transition-duration) var(--primary-transition-timing),
+              transform var(--primary-transition-duration) var(--primary-transition-timing),
+              border-color var(--primary-transition-duration) var(--primary-transition-timing),
+              box-shadow var(--primary-transition-duration) var(--primary-transition-timing);
 }
 
 .socialLinks a:hover {
-  background: rgba(37, 99, 235, 0.12);
-  border-color: var(--primary-header-color);
+  background: rgba(14, 165, 233, 0.12);
+  border-color: var(--primary-accent-color);
   transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.12);
+  box-shadow: 0 6px 20px rgba(14, 165, 233, 0.15);
 }
 
 .socialLinks i {
@@ -502,11 +583,11 @@ footer h2::after {
 
 .socialLinks svg {
   fill: var(--primary-text-color);
-  transition: fill 0.2s;
+  transition: fill var(--primary-transition-duration) var(--primary-transition-timing);
 }
 
 .socialLinks a:hover svg {
-  fill: var(--primary-header-color);
+  fill: var(--primary-accent-color);
 }
 
 .copyright {
@@ -543,23 +624,27 @@ footer h2::after {
   }
 
   .container {
-    padding: 40px 0;
+    padding: 48px 0;
   }
 
   h2 {
-    font-size: 1.35rem;
+    font-size: 1.5rem;
+  }
+
+  .sectionHeader h2 {
+    font-size: 1.6rem;
   }
 
   .wrapper {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: 20px;
+    gap: 24px;
   }
 
   .pfp {
-    width: 140px;
-    height: 140px;
+    width: 160px;
+    height: 160px;
   }
 
   .abouts {
@@ -586,7 +671,7 @@ footer h2::after {
     top: 60px;
     left: 0;
     right: 0;
-    background: rgba(248, 250, 252, 0.97);
+    background: var(--primary-nav-bg);
     backdrop-filter: blur(12px);
     flex-direction: column;
     padding: 12px 16px;
@@ -594,7 +679,7 @@ footer h2::after {
     transform: translateY(-120%);
     opacity: 0;
     transition: transform 0.3s ease, opacity 0.3s ease;
-    border-bottom: 1px solid rgba(30, 41, 59, 0.1);
+    border-bottom: 1px solid var(--primary-border-color);
   }
 
   .navOpen {
@@ -605,11 +690,11 @@ footer h2::after {
   .navLinks a {
     padding: 14px 16px;
     font-size: 1rem;
-    border-radius: 8px;
+    border-radius: var(--primary-border-radius);
   }
 
   .card {
-    padding: 16px 12px 16px 18px;
+    padding: 20px;
   }
 
   .card:hover {
@@ -619,7 +704,7 @@ footer h2::after {
   /* Education */
   .eduGrid {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 20px;
   }
 
   .eduGrid .card:hover {
@@ -656,16 +741,24 @@ footer h2::after {
   }
 
   .container {
-    padding: 32px 0;
+    padding: 36px 0;
   }
 
   .pfp {
-    width: 120px;
-    height: 120px;
+    width: 130px;
+    height: 130px;
   }
 
   h2 {
-    font-size: 1.25rem;
+    font-size: 1.35rem;
+  }
+
+  .sectionHeader h2 {
+    font-size: 1.4rem;
+  }
+
+  .sectionHeader .sectionSubtitle {
+    font-size: 0.9rem;
   }
 
   .card h4 {
