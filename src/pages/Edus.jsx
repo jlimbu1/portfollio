@@ -1,28 +1,9 @@
-import React from 'react';
-import { educationData } from '../data/timelineData';
-import useScrollReveal from '../hooks/useScrollReveal';
+// This file has been deprecated and replaced by the unified Timeline component.
+// See src/components/Timeline.jsx for the replacement.
+// This empty export prevents import errors during migration.
 
-const Edus = () => {
-  return (
-    <div className="section">
-      <h2>Education</h2>
-      {educationData.map((edu) => (
-        <TimelineEntry key={edu.id} entry={edu} />
-      ))}
-    </div>
-  );
-};
-
-const TimelineEntry = ({ entry }) => {
-  const [ref, visible] = useScrollReveal(0.2);
-  return (
-    <div ref={ref} className={`timeline-entry ${visible ? 'visible' : ''}`}>
-      <h3>{entry.title}</h3>
-      <p>{entry.institution}</p>
-      <small>{entry.date}</small>
-      <p>{entry.description}</p>
-    </div>
-  );
-};
+function Edus() {
+    return null;
+}
 
 export default Edus;
