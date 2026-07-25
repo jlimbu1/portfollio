@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faX } from '@fortawesome/free-solid-svg-icons'
 import useScrollSpy from '../hooks/useScrollSpy'
 
-const sections = ['abouts', 'educations', 'experiences', 'projects', 'skills', 'contacts'];
+const sections = ['abouts', 'timeline', 'skills', 'contacts'];
 
 function Nav() {
     const [scrolled, setScrolled] = useState(false);
@@ -41,9 +41,7 @@ function Nav() {
                 <nav className={`${st.navLinks} ${show ? st.navOpen : ''}`}>
                     {[
                         ['abouts', 'About'],
-                        ['educations', 'Education'],
-                        ['experiences', 'Experience'],
-                        ['projects', 'Projects'],
+                        ['timeline', 'Timeline'],
                         ['skills', 'Skills'],
                         ['contacts', 'Contact'],
                     ].map(([id, label]) => (
