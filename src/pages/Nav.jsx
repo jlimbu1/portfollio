@@ -31,46 +31,59 @@ const Nav = () => {
 
     const closeMenu = () => setShow(false);
 
-    const toggleMenu = useCallback(() => {
-        setShow(prev => !prev);
-    }, []);
+    const handleKeyDown = useCallback((e) => {
+        if (e.key === 'Escape' && show) {
+            setShow(false);
+        }
+    }, [show]);
+
+    useEffect(() => {
+        document.addEventListener('keydown', handleKeyDown);
+        return () => document.removeEventListener('keydown', handleKeyDown);
+    }, [handleKeyDown]);
 
     return (
-        <header className={`${st.nav} ${scrolled ? st.navScrolled : ''}`}>
+        <header className={`${st.nav} ${scrolled ? st.navScrolled : ''}`} role="banner">
             <div className={st.navInner}>
-                <a className={st.logo} href="#abouts" onClick={closeMenu}>
-                    <img src="https://i.imgur.com/YLt0FBm.jpg" alt="logo" />
+                <a className={st.logo} href="#abouts" onClick={closeMenu} aria-label="Go to About section">
+                    <img src="https://i.imgur.com/YLt0FBm.jpg" alt="Jimmy Limbu logo" />
                 </a>
 
                 <button
                     className={st.hamburger}
-                    onClick={toggleMenu}
-                    onTouchEnd={(e) => {
-                        e.preventDefault();
-                        toggleMenu();
-                    }}
-                    aria-label="Toggle navigation"
+                    onClick={() => setShow(!show)}
+                    aria-label={show ? "Close navigation menu" : "Open navigation menu"}
                     aria-expanded={show}
+                    aria-controls="primary-navigation"
                 >
-                    <FontAwesomeIcon icon={show ? faX : faBars} />
+                    <FontAwesomeIcon icon={show ? faX : faBars} aria-hidden="true" />
                 </button>
 
-                <nav className={`${st.navLinks} ${show ? st.navOpen : ''}`}>
-                    {[
-                        ['abouts', 'About'],
-                        ['timeline', 'Timeline'],
-                        ['skills', 'Skills'],
-                        ['contacts', 'Contact'],
-                    ].map(([id, label]) => (
-                        <a
-                            key={id}
-                            href={`#${id}`}
-                            className={active === id ? st.navActive : ''}
-                            onClick={closeMenu}
-                        >
-                            {label}
-                        </a>
-                    ))}
+                <nav
+                    id="primary-navigation"
+                    className={`${st.navLinks} ${show ? st.navOpen : ''}`}
+                    role="navigation"
+                    aria-label="Primary navigation"
+                >
+                    <ul role="list" className={st.navList}>
+                        {[
+                            ['abouts', 'About'],
+                            ['timeline', 'Timeline'],
+                            ['skills', 'Skills'],
+                            ['contacts', 'Contact'],
+                        ].map(([id, label]) => (
+                            <li key={id} role="listitem">
+                                <a
+                                    href={`#${id}`}
+                                    className={active === id ? st.navActive : ''}
+                                    onClick={closeMenu}
+                                    aria-current={active === id ? 'true' : undefined}
+                                >
+                                    {label}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
                 </nav>
             </div>
         </header>
