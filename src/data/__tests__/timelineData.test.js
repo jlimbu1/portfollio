@@ -82,10 +82,10 @@ describe('timelineData', () => {
       expect(titles).toContain('Full Stack Developer');
       expect(titles).toContain('Junior Software Developer');
 
-      const organizations = experienceData.map((e) => e.organization);
-      expect(organizations).toContain('DIY ROCKS');
-      expect(organizations).toContain('Fletrix');
-      expect(organizations).toContain('Wealthskey');
+      const orgs = experienceData.map((e) => e.organization);
+      expect(orgs).toContain('DIY ROCKS');
+      expect(orgs).toContain('Fletrix');
+      expect(orgs).toContain('Wealthskey');
     });
 
     it('should have unique ids', () => {
