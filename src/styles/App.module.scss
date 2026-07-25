@@ -191,7 +191,21 @@ p, span, li {
   background: rgba(151, 255, 231, 0.08);
 }
 
-/* ===== About ===== */
+/* ===== About Hero Card ===== */
+.heroCard {
+  background: var(--card-bg, #ffffff);
+  border: 1px solid var(--card-border, #e2e8f0);
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.heroCard:hover {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
 .wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -203,7 +217,7 @@ p, span, li {
   width: 180px;
   height: 180px;
   border-radius: 50%;
-  border: 2px solid var(--primary-header-color);
+  border: 3px solid var(--primary-header-color);
   object-fit: cover;
   flex-shrink: 0;
   transition: box-shadow 0.4s, transform 0.4s;
@@ -216,6 +230,11 @@ p, span, li {
 .abouts {
   flex: 1;
   min-width: 280px;
+}
+
+.abouts h2 {
+  font-size: 1.75rem;
+  margin-bottom: 4px;
 }
 
 .abouts .subtitle {
@@ -231,7 +250,40 @@ p, span, li {
 }
 
 .abouts .icon {
-  opacity: 0.5;
+  opacity: 0.7;
+  color: var(--primary-header-color);
+}
+
+.contactLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.contactLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--primary-text-color);
+  text-decoration: none;
+  font-size: 0.92rem;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: rgba(47, 202, 166, 0.05);
+  border: 1px solid rgba(47, 202, 166, 0.1);
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.contactLink:hover {
+  background: rgba(151, 255, 231, 0.1);
+  border-color: var(--primary-header-color);
+  color: var(--primary-header-color);
+  text-decoration: none;
+}
+
+.contactLink .icon {
+  margin-right: 0;
 }
 
 /* ===== Cards ===== */
@@ -472,6 +524,11 @@ footer h2::after {
     font-size: 1.35rem;
   }
 
+  .heroCard {
+    padding: 24px;
+    border-radius: 12px;
+  }
+
   .wrapper {
     flex-direction: column;
     align-items: center;
@@ -486,6 +543,10 @@ footer h2::after {
 
   .abouts {
     min-width: 0;
+  }
+
+  .contactLinks {
+    justify-content: center;
   }
 
   /* Nav mobile */
@@ -567,6 +628,11 @@ footer h2::after {
 
   .container {
     padding: 32px 0;
+  }
+
+  .heroCard {
+    padding: 20px;
+    border-radius: 10px;
   }
 
   .pfp {
