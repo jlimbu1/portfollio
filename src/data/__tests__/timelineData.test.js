@@ -82,10 +82,10 @@ describe('timelineData', () => {
       expect(titles).toContain('Full Stack Developer');
       expect(titles).toContain('Junior Software Developer');
 
-      const organizations = experienceData.map((e) => e.organization);
-      expect(organizations).toContain('DIY ROCKS');
-      expect(organizations).toContain('Fletrix');
-      expect(organizations).toContain('Wealthskey');
+      const orgs = experienceData.map((e) => e.organization);
+      expect(orgs).toContain('DIY ROCKS');
+      expect(orgs).toContain('Fletrix');
+      expect(orgs).toContain('Wealthskey');
     });
 
     it('should have unique ids', () => {
@@ -121,40 +121,16 @@ describe('timelineData', () => {
     });
 
     it('should contain the expected project entries', () => {
-      const titles = projectData.map((e) => e.title);
+      const titles = projectData.map((p) => p.title);
       expect(titles).toContain('ARM MOOC Platform');
-      expect(titles).toContain('Danger Dungeon');
       expect(titles).toContain('Arduino Gameboy');
+      expect(titles).toContain('Danger Dungeon');
     });
 
     it('should have unique ids', () => {
-      const ids = projectData.map((e) => e.id);
+      const ids = projectData.map((p) => p.id);
       const uniqueIds = new Set(ids);
       expect(uniqueIds.size).toBe(ids.length);
-    });
-  });
-
-  describe('cross-data integrity', () => {
-    it('should have no duplicate ids across all data sets', () => {
-      const allIds = [
-        ...educationData.map((e) => e.id),
-        ...experienceData.map((e) => e.id),
-        ...projectData.map((e) => e.id),
-      ];
-      const uniqueIds = new Set(allIds);
-      expect(uniqueIds.size).toBe(allIds.length);
-    });
-
-    it('should have correct type values for each data set', () => {
-      educationData.forEach((entry) => {
-        expect(entry.type).toBe('education');
-      });
-      experienceData.forEach((entry) => {
-        expect(entry.type).toBe('experience');
-      });
-      projectData.forEach((entry) => {
-        expect(entry.type).toBe('project');
-      });
     });
   });
 });

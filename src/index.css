@@ -97,8 +97,388 @@ img {
   }
 }
 
-@media (max-width: 768px) {
+/* ===== Responsive Breakpoints ===== */
+
+/* 320px - 767px: Mobile */
+@media (max-width: 767px) {
   html {
-    scroll-padding-top: 70px;
+    scroll-padding-top: 60px;
+  }
+
+  body {
+    font-size: 0.95rem;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  .App {
+    padding: 0 16px;
+  }
+
+  .container {
+    padding: 40px 0;
+  }
+
+  .sectionHeader {
+    margin-bottom: 32px;
+  }
+
+  .sectionHeader h2 {
+    font-size: 1.5rem;
+  }
+
+  /* Nav - hamburger visible, links hidden by default */
+  .navInner {
+    height: 60px;
+    padding: 0 16px;
+  }
+
+  .hamburger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .navLinks {
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background: var(--primary-nav-bg, #ffffff);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 8px 0;
+    gap: 0;
+  }
+
+  .navLinks.open {
+    display: flex;
+  }
+
+  .navLinks a {
+    padding: 12px 24px;
+    border-radius: 0;
+    font-size: 1rem;
+  }
+
+  /* About section stacks vertically */
+  .wrapper {
+    flex-direction: column;
+    gap: 24px;
+    text-align: center;
+  }
+
+  .pfp {
+    width: 140px;
+    height: 140px;
+  }
+
+  .abouts {
+    min-width: unset;
+  }
+
+  /* Timeline stacks vertically */
+  .timelineLine {
+    left: 20px;
+  }
+
+  .timelineEntry {
+    flex-direction: column;
+    padding-left: 48px;
+    padding-right: 16px;
+  }
+
+  .timelineEntryLeft,
+  .timelineEntryRight {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .timelineCard {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .timelineDot {
+    left: 12px;
+  }
+
+  .timelineDate {
+    text-align: left;
+    margin-bottom: 8px;
+  }
+
+  /* Education grid: 1 column */
+  .eduGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .eduGrid img {
+    max-width: 100%;
+    height: 60px;
+  }
+
+  /* Skills grid: 1 column */
+  .skills ul {
+    gap: 8px;
+  }
+
+  .skills li {
+    font-size: 0.82rem;
+    padding: 6px 12px;
+  }
+
+  .skillBars {
+    gap: 12px;
+  }
+
+  .skillBarLabel {
+    font-size: 0.82rem;
+  }
+
+  /* Cards */
+  .card {
+    padding: 16px;
+  }
+
+  .card + .card {
+    margin-top: 16px;
+  }
+
+  /* Footer */
+  .socialLinks {
+    gap: 16px;
+  }
+
+  .socialLinks a {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* 768px - 1023px: Tablet */
+@media (min-width: 768px) and (max-width: 1023px) {
+  html {
+    scroll-padding-top: 75px;
+  }
+
+  .App {
+    padding: 0 32px;
+  }
+
+  .container {
+    padding: 56px 0;
+  }
+
+  .sectionHeader h2 {
+    font-size: 1.75rem;
+  }
+
+  /* Nav */
+  .navInner {
+    height: 65px;
+    padding: 0 32px;
+  }
+
+  .hamburger {
+    display: none;
+  }
+
+  .navLinks {
+    display: flex;
+    gap: 2px;
+  }
+
+  .navLinks a {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+
+  /* About */
+  .wrapper {
+    gap: 32px;
+  }
+
+  .pfp {
+    width: 160px;
+    height: 160px;
+  }
+
+  /* Timeline */
+  .timelineEntry {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .timelineCard {
+    width: calc(50% - 40px);
+  }
+
+  /* Education grid: 2 columns */
+  .eduGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  /* Skills grid: 2 columns */
+  .skills ul {
+    gap: 10px;
+  }
+
+  .skills li {
+    font-size: 0.85rem;
+    padding: 7px 13px;
+  }
+
+  /* Cards */
+  .card {
+    padding: 20px;
+  }
+
+  .card + .card {
+    margin-top: 20px;
+  }
+}
+
+/* 1024px - 1439px: Desktop */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .App {
+    padding: 0 40px;
+  }
+
+  .container {
+    padding: 64px 0;
+  }
+
+  .navInner {
+    height: 70px;
+    padding: 0 40px;
+  }
+
+  .hamburger {
+    display: none;
+  }
+
+  .navLinks {
+    display: flex;
+    gap: 4px;
+  }
+
+  .navLinks a {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+
+  /* Timeline */
+  .timelineEntry {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  .timelineCard {
+    width: calc(50% - 48px);
+  }
+
+  /* Education grid: 2 columns */
+  .eduGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+
+  /* Skills grid: 3 columns */
+  .skills ul {
+    gap: 10px;
+  }
+
+  .skills li {
+    font-size: 0.88rem;
+    padding: 8px 14px;
+  }
+}
+
+/* 1440px+: Large Desktop */
+@media (min-width: 1440px) {
+  .App {
+    max-width: 1200px;
+    padding: 0 48px;
+  }
+
+  .container {
+    padding: 72px 0;
+  }
+
+  .navInner {
+    max-width: 1200px;
+    padding: 0 48px;
+  }
+
+  .hamburger {
+    display: none;
+  }
+
+  .navLinks {
+    display: flex;
+    gap: 6px;
+  }
+
+  .navLinks a {
+    padding: 8px 18px;
+    font-size: 0.92rem;
+  }
+
+  /* Timeline */
+  .timelineEntry {
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+
+  .timelineCard {
+    width: calc(50% - 56px);
+  }
+
+  /* Education grid: 2 columns */
+  .eduGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  /* Skills grid: 4 columns */
+  .skills ul {
+    gap: 12px;
+  }
+
+  .skills li {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .hamburger {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .navLinks a {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  .skills li {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  .socialLinks a {
+    min-width: 44px;
+    min-height: 44px;
   }
 }
