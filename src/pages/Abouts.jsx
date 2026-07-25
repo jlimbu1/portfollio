@@ -7,7 +7,7 @@ function Abouts() {
     const [ref, visible] = useScrollReveal();
 
     return (
-        <div id='abouts' className={st.container}>
+        <div id='about' className={st.container}>
             <div ref={ref} className={`${st.wrapper} ${st.reveal} ${visible ? st.visible : ''}`}>
                 <img className={st.pfp} src="https://i.imgur.com/8wtSgQm.jpg" alt="Jimmy Limbu" />
                 <div className={st.abouts}>
