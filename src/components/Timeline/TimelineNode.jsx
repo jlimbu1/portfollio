@@ -1,49 +1,111 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './Timeline.module.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import useScrollReveal from '../../hooks/useScrollReveal';
+import st from '../../styles/Timeline.module.scss';
 
-function TimelineNode({ entry, config, position, index }) {
-  if (!entry) {
-    return null;
-  }
+function TimelineNode({
+  entry,
+  config,
+  isLeft,
+  index,
+  sectionVisible,
+}) {
+  const [nodeRef, nodeVisible] = useScrollReveal();
+  const isVisible = sectionVisible && nodeVisible;
 
-  const {
-    id,
-    title,
-    institution,
-    organization,
-    date,
-    description,
-    type,
-  } = entry;
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      const link = e.currentTarget.querySelector('a');
+      if (link) {
+        link.click();
+      }
+    }
+  };
 
-  const subtitle = institution || organization || '';
-  const nodePosition = position || (index % 2 === 0 ? 'left' : 'right');
-  const iconClass = config?.icon || 'fas fa-code';
-  const typeLabel = config?.label || 'Entry';
+  const hasLink = entry.link && entry.link.trim().length > 0;
 
   return (
     <div
-      className={`${styles.timelineNode} ${styles[nodePosition]}`}
+      ref={nodeRef}
+      className={`${st.timelineNode} ${isLeft ? st.timelineNodeLeft : st.timelineNodeRight} ${isVisible ? st.timelineNodeVisible : ''}`}
       role="listitem"
-      aria-label={`${typeLabel}: ${title}`}
-      tabIndex={0}
+      aria-label={`${config.label}: ${entry.title}`}
+      style={{ transitionDelay: `${index * 0.1}s` }}
     >
-      <div className={styles.timelineNodeMarker} aria-hidden="true">
-        <i className={iconClass} />
-      </div>
-      <div className={styles.timelineNodeCard}>
-        <div className={styles.timelineNodeHeader}>
-          <span className={styles.timelineNodeType}>{typeLabel}</span>
-          <span className={styles.timelineNodeDate}>{date}</span>
+      <div
+        className={st.timelineCard}
+        tabIndex={0}
+        onKeyDown={handleKeyDown}
+        aria-label={`${config.label} entry: ${entry.title}. ${entry.description || ''}`}
+      >
+        <div className={st.timelineCardHeader}>
+          <span className={st.timelineTypeBadge} aria-hidden="true">
+            <FontAwesomeIcon icon={config.icon} aria-hidden="true" />
+            <span className={st.timelineTypeLabel}>{config.label}</span>
+          </span>
+          <time
+            className={st.timelineDate}
+            dateTime={entry.date}
+            aria-label={`Date: ${entry.date}`}
+          >
+            {entry.date}
+          </time>
         </div>
-        <h3 className={styles.timelineNodeTitle}>{title}</h3>
-        {subtitle && (
-          <p className={styles.timelineNodeSubtitle}>{subtitle}</p>
+
+        <h3 className={st.timelineCardTitle}>{entry.title}</h3>
+
+        {entry.subtitle && (
+          <p className={st.timelineCardSubtitle}>{entry.subtitle}</p>
         )}
-        {description && (
-          <p className={styles.timelineNodeDescription}>{description}</p>
+
+        {entry.description && (
+          <p className={st.timelineCardDescription}>{entry.description}</p>
         )}
+
+        {entry.technologies && entry.technologies.length > 0 && (
+          <div className={st.timelineTechList} aria-label="Technologies used">
+            {entry.technologies.map((tech) => (
+              <span key={tech} className={st.timelineTechTag}>
+                {tech}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {hasLink && (
+          <a
+            href={entry.link}
+            className={st.timelineCardLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`View ${entry.title} (opens in new tab)`}
+          >
+            View Project
+            <svg
+              className={st.timelineExternalIcon}
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+              <polyline points="15 3 21 3 21 9" />
+              <line x1="10" y1="14" x2="21" y2="3" />
+            </svg>
+          </a>
+        )}
+      </div>
+
+      <div className={st.timelineDot} aria-hidden="true">
+        <FontAwesomeIcon icon={config.icon} />
       </div>
     </div>
   );
@@ -51,29 +113,20 @@ function TimelineNode({ entry, config, position, index }) {
 
 TimelineNode.propTypes = {
   entry: PropTypes.shape({
-    id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    institution: PropTypes.string,
-    organization: PropTypes.string,
     date: PropTypes.string.isRequired,
     description: PropTypes.string,
-    type: PropTypes.string,
+    subtitle: PropTypes.string,
+    link: PropTypes.string,
+    technologies: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
   config: PropTypes.shape({
-    icon: PropTypes.string,
-    label: PropTypes.string,
-  }),
-  position: PropTypes.oneOf(['left', 'right']),
-  index: PropTypes.number,
-};
-
-TimelineNode.defaultProps = {
-  config: {
-    icon: 'fas fa-code',
-    label: 'Entry',
-  },
-  position: undefined,
-  index: 0,
+    icon: PropTypes.object.isRequired,
+    label: PropTypes.string.isRequired,
+  }).isRequired,
+  isLeft: PropTypes.bool.isRequired,
+  index: PropTypes.number.isRequired,
+  sectionVisible: PropTypes.bool.isRequired,
 };
 
 export default React.memo(TimelineNode);
