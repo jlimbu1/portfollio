@@ -93,6 +93,28 @@ p, span, li {
 .reveal > .card:nth-child(4) { transition-delay: 0.2s; }
 .reveal > .card:nth-child(5) { transition-delay: 0.25s; }
 
+/* Stagger timeline entries */
+.reveal > .timelineEntry:nth-child(1) { transition-delay: 0s; }
+.reveal > .timelineEntry:nth-child(2) { transition-delay: 0.1s; }
+.reveal > .timelineEntry:nth-child(3) { transition-delay: 0.15s; }
+.reveal > .timelineEntry:nth-child(4) { transition-delay: 0.2s; }
+.reveal > .timelineEntry:nth-child(5) { transition-delay: 0.25s; }
+.reveal > .timelineEntry:nth-child(6) { transition-delay: 0.3s; }
+.reveal > .timelineEntry:nth-child(7) { transition-delay: 0.35s; }
+.reveal > .timelineEntry:nth-child(8) { transition-delay: 0.4s; }
+
+/* Stagger skill bars */
+.reveal > .skillBar:nth-child(1) { transition-delay: 0s; }
+.reveal > .skillBar:nth-child(2) { transition-delay: 0.08s; }
+.reveal > .skillBar:nth-child(3) { transition-delay: 0.12s; }
+.reveal > .skillBar:nth-child(4) { transition-delay: 0.16s; }
+.reveal > .skillBar:nth-child(5) { transition-delay: 0.2s; }
+.reveal > .skillBar:nth-child(6) { transition-delay: 0.24s; }
+.reveal > .skillBar:nth-child(7) { transition-delay: 0.28s; }
+.reveal > .skillBar:nth-child(8) { transition-delay: 0.32s; }
+.reveal > .skillBar:nth-child(9) { transition-delay: 0.36s; }
+.reveal > .skillBar:nth-child(10) { transition-delay: 0.4s; }
+
 /* ===== Layout ===== */
 .App {
   max-width: 900px;
@@ -273,6 +295,45 @@ p, span, li {
   font-size: 0.92rem;
 }
 
+/* ===== Timeline ===== */
+.timelineEntry {
+  padding: 20px 20px 20px 24px;
+  scroll-margin-top: 90px;
+  border-left: 2px solid transparent;
+  border-radius: 0 8px 8px 0;
+  transition: border-color 0.3s, background 0.3s, transform 0.2s;
+}
+
+.timelineEntry:hover {
+  border-left-color: var(--primary-header-color);
+  background: rgba(151, 255, 231, 0.03);
+  transform: translateX(4px);
+}
+
+.timelineEntry + .timelineEntry {
+  margin-top: 28px;
+  border-top: none;
+}
+
+.timelineEntry h4 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.timelineEntry .date {
+  color: rgba(47, 202, 166, 0.6);
+  font-size: 0.85rem;
+}
+
+.timelineEntry ul {
+  margin-top: 10px;
+}
+
+.timelineEntry li {
+  padding: 4px 0;
+  font-size: 0.92rem;
+}
+
 /* ===== Education Grid ===== */
 .eduGrid {
   display: grid;
@@ -372,6 +433,39 @@ p, span, li {
 
 .skills i {
   font-size: 1.3rem;
+}
+
+/* ===== Skill Bars ===== */
+.skillBar {
+  margin-bottom: 16px;
+}
+
+.skillBarLabel {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+  color: var(--primary-text-color);
+}
+
+.skillBarTrack {
+  width: 100%;
+  height: 8px;
+  background: rgba(47, 202, 166, 0.08);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.skillBarFill {
+  height: 100%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, rgba(47, 202, 166, 0.7), rgba(151, 255, 231, 0.9));
+  width: 0;
+  transition: width 1s ease 0.3s;
+}
+
+.reveal.visible .skillBarFill {
+  width: var(--skill-level);
 }
 
 /* ===== Footer ===== */
@@ -538,6 +632,14 @@ footer h2::after {
     transform: none;
   }
 
+  .timelineEntry {
+    padding: 16px 12px 16px 18px;
+  }
+
+  .timelineEntry:hover {
+    transform: none;
+  }
+
   /* Education */
   .eduGrid {
     grid-template-columns: 1fr;
@@ -583,6 +685,14 @@ footer h2::after {
   }
 
   .card li {
+    font-size: 0.85rem;
+  }
+
+  .timelineEntry h4 {
+    font-size: 1rem;
+  }
+
+  .timelineEntry li {
     font-size: 0.85rem;
   }
 
