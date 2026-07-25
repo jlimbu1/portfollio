@@ -80,58 +80,57 @@ export const projectData = [
 
 /**
  * Returns all timeline entries merged and sorted by date (most recent first).
- * Handles date ranges like "2023 - Present" by extracting the start year.
- * Entries with unparseable dates are placed at the end.
- * @returns {Array} Sorted array of timeline entry objects.
+ * Each entry is normalized to include a `sortDate` (Date object) for ordering.
+ * @returns {Array<Object>} Sorted array of timeline entry objects.
  */
-export function getSortedTimelineEntries() {
+export function getTimelineEntries() {
   const allEntries = [...educationData, ...experienceData, ...projectData];
 
-  return allEntries.sort((a, b) => {
-    const yearA = extractStartYear(a.date);
-    const yearB = extractStartYear(b.date);
-
-    if (yearA === null && yearB === null) return 0;
-    if (yearA === null) return 1;
-    if (yearB === null) return -1;
-    return yearB - yearA;
+  const parsed = allEntries.map((entry) => {
+    const sortDate = parseDateFromRange(entry.date);
+    return { ...entry, sortDate };
   });
+
+  parsed.sort((a, b) => {
+    if (!a.sortDate && !b.sortDate) return 0;
+    if (!a.sortDate) return 1;
+    if (!b.sortDate) return -1;
+    return b.sortDate - a.sortDate;
+  });
+
+  return parsed;
 }
 
 /**
- * Extracts the start year from a date string.
- * Handles formats: "2023", "2023 - Present", "2020 - 2022".
- * Returns null if no valid year is found.
+ * Parses a date string like "2023 - Present" or "2022" into a Date object.
+ * For "Present", uses the current date. Returns null if unparseable.
  * @param {string} dateStr
- * @returns {number|null}
+ * @returns {Date|null}
  */
-function extractStartYear(dateStr) {
-  if (!dateStr || typeof dateStr !== 'string') return null;
-  const match = dateStr.match(/^(\d{4})/);
-  if (!match) return null;
-  const year = parseInt(match[1], 10);
-  return isNaN(year) ? null : year;
-}
+function parseDateFromRange(dateStr) {
+  if (!dateStr || typeof dateStr !== "string") return null;
 
-/**
- * Validates that a timeline entry has all required fields.
- * Required: id, title, date, description, type.
- * @param {object} entry
- * @returns {boolean}
- */
-export function isValidTimelineEntry(entry) {
-  if (!entry || typeof entry !== 'object') return false;
-  const requiredFields = ['id', 'title', 'date', 'description', 'type'];
-  return requiredFields.every(field => {
-    const value = entry[field];
-    return value !== undefined && value !== null && typeof value === 'string' && value.trim().length > 0;
-  });
-}
+  const trimmed = dateStr.trim();
 
-/**
- * Returns all timeline entries that pass validation.
- * @returns {Array}
- */
-export function getValidTimelineEntries() {
-  return getSortedTimelineEntries().filter(isValidTimelineEntry);
+  // Handle "YYYY - Present" or "YYYY - present"
+  const presentMatch = trimmed.match(/^(\d{4})\s*[-–]\s*Present$/i);
+  if (presentMatch) {
+    return new Date();
+  }
+
+  // Handle "YYYY - YYYY"
+  const rangeMatch = trimmed.match(/^(\d{4})\s*[-–]\s*(\d{4})$/);
+  if (rangeMatch) {
+    const endYear = parseInt(rangeMatch[2], 10);
+    return new Date(endYear, 11, 31);
+  }
+
+  // Handle single year "YYYY"
+  const singleMatch = trimmed.match(/^(\d{4})$/);
+  if (singleMatch) {
+    const year = parseInt(singleMatch[1], 10);
+    return new Date(year, 11, 31);
+  }
+
+  return null;
 }
