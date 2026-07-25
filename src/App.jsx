@@ -4,7 +4,7 @@ import Abouts from './pages/Abouts';
 import Edus from './pages/Edus';
 import Exps from './pages/Exps';
 import Projects from './pages/Projects';
-import Skills from './pages/Skills';
+import SkillsRadar from './components/SkillsRadar/SkillsRadar';
 import Footer from './pages/Footer';
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
         <Edus />
         <Exps />
         <Projects />
-        <Skills />
+        <SkillsRadar />
         <Footer />
       </main>
     </div>
