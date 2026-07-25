@@ -73,7 +73,64 @@ export const projectData = [
     title: "Danger Dungeon",
     date: "2022",
     description:
-      "Multiplayer online dungeon crawler game built with Java and LibGDX. Features procedurally generated dungeons, real-time multiplayer combat, and loot systems. Deployed using custom server architecture.",
+      "Multiplayer online dungeon crawler game built with Java and LibGDX. Features procedural map generation, networked multiplayer, and real-time combat.",
     type: "project",
   },
 ];
+
+/**
+ * Returns all timeline entries merged and sorted by date (most recent first).
+ * Each entry is normalized to include a `sortDate` (Date object) for ordering.
+ * @returns {Array<Object>} Sorted array of timeline entry objects.
+ */
+export function getTimelineEntries() {
+  const allEntries = [...educationData, ...experienceData, ...projectData];
+
+  const parsed = allEntries.map((entry) => {
+    const sortDate = parseDateFromRange(entry.date);
+    return { ...entry, sortDate };
+  });
+
+  parsed.sort((a, b) => {
+    if (!a.sortDate && !b.sortDate) return 0;
+    if (!a.sortDate) return 1;
+    if (!b.sortDate) return -1;
+    return b.sortDate - a.sortDate;
+  });
+
+  return parsed;
+}
+
+/**
+ * Parses a date string like "2023 - Present" or "2022" into a Date object.
+ * For "Present", uses the current date. Returns null if unparseable.
+ * @param {string} dateStr
+ * @returns {Date|null}
+ */
+function parseDateFromRange(dateStr) {
+  if (!dateStr || typeof dateStr !== "string") return null;
+
+  const trimmed = dateStr.trim();
+
+  // Handle "YYYY - Present" or "YYYY - present"
+  const presentMatch = trimmed.match(/^(\d{4})\s*[-–]\s*Present$/i);
+  if (presentMatch) {
+    return new Date();
+  }
+
+  // Handle "YYYY - YYYY"
+  const rangeMatch = trimmed.match(/^(\d{4})\s*[-–]\s*(\d{4})$/);
+  if (rangeMatch) {
+    const endYear = parseInt(rangeMatch[2], 10);
+    return new Date(endYear, 11, 31);
+  }
+
+  // Handle single year "YYYY"
+  const singleMatch = trimmed.match(/^(\d{4})$/);
+  if (singleMatch) {
+    const year = parseInt(singleMatch[1], 10);
+    return new Date(year, 11, 31);
+  }
+
+  return null;
+}
