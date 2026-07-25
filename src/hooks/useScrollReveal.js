@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-export default function useScrollReveal(threshold = 0.1) {
+export function useScrollReveal(threshold = 0.1) {
     const ref = useRef(null);
     const [visible, setVisible] = useState(false);
 
@@ -24,3 +24,5 @@ export default function useScrollReveal(threshold = 0.1) {
 
     return [ref, visible];
 }
+
+export default useScrollReveal;

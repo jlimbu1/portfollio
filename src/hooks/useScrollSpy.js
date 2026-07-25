@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export default function useScrollSpy(sectionIds, offset = 100) {
+export function useScrollSpy(sectionIds, offset = 100) {
     const [active, setActive] = useState(sectionIds[0] || '');
 
     useEffect(() => {
@@ -24,3 +24,5 @@ export default function useScrollSpy(sectionIds, offset = 100) {
 
     return active;
 }
+
+export default useScrollSpy;
