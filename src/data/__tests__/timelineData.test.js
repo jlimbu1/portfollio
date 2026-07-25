@@ -96,10 +96,10 @@ describe('timelineData', () => {
       expect(titles).toContain('Full Stack Developer');
       expect(titles).toContain('Junior Software Developer');
 
-      const organizations = experienceData.map((e) => e.organization);
-      expect(organizations).toContain('DIY ROCKS');
-      expect(organizations).toContain('Fletrix');
-      expect(organizations).toContain('Wealthskey');
+      const orgs = experienceData.map((e) => e.organization);
+      expect(orgs).toContain('DIY ROCKS');
+      expect(orgs).toContain('Fletrix');
+      expect(orgs).toContain('Wealthskey');
     });
 
     it('should have unique ids', () => {
@@ -149,14 +149,14 @@ describe('timelineData', () => {
     });
 
     it('should contain the expected project entries', () => {
-      const titles = projectData.map((e) => e.title);
+      const titles = projectData.map((p) => p.title);
       expect(titles).toContain('ARM MOOC Platform');
-      expect(titles).toContain('Danger Dungeon');
       expect(titles).toContain('Arduino Gameboy');
+      expect(titles).toContain('Danger Dungeon');
     });
 
     it('should have unique ids', () => {
-      const ids = projectData.map((e) => e.id);
+      const ids = projectData.map((p) => p.id);
       const uniqueIds = new Set(ids);
       expect(uniqueIds.size).toBe(ids.length);
     });

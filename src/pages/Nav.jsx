@@ -1,20 +1,28 @@
-import st from '../styles/App.module.scss'
-import React, { useState, useCallback, useEffect } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars, faX } from '@fortawesome/free-solid-svg-icons'
-import useScrollSpy from '../hooks/useScrollSpy'
+import React from 'react';
+import { useScrollSpy } from '../hooks/useScrollSpy';
 
-const sections = ['abouts', 'timeline', 'skills', 'contacts'];
+const sectionIds = ['about', 'education', 'experience', 'projects', 'skills'];
 
-function Nav() {
-    const [scrolled, setScrolled] = useState(false);
-    const [show, setShow] = useState(false);
-    const active = useScrollSpy(sections, 120);
+const Nav = () => {
+  const active = useScrollSpy(sectionIds, 100);
 
-    const handleScroll = useCallback(() => {
-        setScrolled(window.scrollY > 50);
-        setShow(false);
-    }, []);
+  return (
+    <nav>
+      <ul>
+        {sectionIds.map((id) => (
+          <li key={id}>
+            <a
+              href={`#${id}`}
+              className={active === id ? 'active' : ''}
+            >
+              {id.charAt(0).toUpperCase() + id.slice(1)}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+};
 
     useEffect(() => {
         window.addEventListener("scroll", handleScroll, { passive: true });
@@ -22,6 +30,10 @@ function Nav() {
     }, [handleScroll]);
 
     const closeMenu = () => setShow(false);
+
+    const toggleMenu = useCallback(() => {
+        setShow(prev => !prev);
+    }, []);
 
     return (
         <header className={`${st.nav} ${scrolled ? st.navScrolled : ''}`}>
@@ -32,8 +44,13 @@ function Nav() {
 
                 <button
                     className={st.hamburger}
-                    onClick={() => setShow(!show)}
+                    onClick={toggleMenu}
+                    onTouchEnd={(e) => {
+                        e.preventDefault();
+                        toggleMenu();
+                    }}
                     aria-label="Toggle navigation"
+                    aria-expanded={show}
                 >
                     <FontAwesomeIcon icon={show ? faX : faBars} />
                 </button>
