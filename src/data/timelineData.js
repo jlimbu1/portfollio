@@ -73,7 +73,7 @@ export const projectData = [
     title: "Danger Dungeon",
     date: "2022",
     description:
-      "Multiplayer online dungeon crawler game built with Java and LibGDX. Features procedurally generated dungeons, real-time combat, and online leaderboard.",
+      "Multiplayer online dungeon crawler game built with Java, Socket.IO, and a custom game engine. Players explore procedurally generated dungeons, fight monsters, and collect loot in real-time co-op mode.",
     type: "project",
   },
 ];
