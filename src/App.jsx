@@ -6,36 +6,31 @@ import Exps from './pages/Exps';
 import Projects from './pages/Projects';
 import Skills from './pages/Skills';
 import Footer from './pages/Footer';
-import { useScrollSpy } from './hooks/useScrollSpy';
-import { useScrollReveal } from './hooks/useScrollReveal';
 import styles from './styles/App.module.scss';
 
-const sectionIds = ['about', 'education', 'experience', 'projects', 'skills', 'contact'];
-
 function App() {
-  const activeSection = useScrollSpy(sectionIds, 100);
-
   return (
     <div className={styles.app}>
-      <Nav active={activeSection} />
+      <Nav />
       <main>
-        <SectionWrapper id="about" Component={Abouts} />
-        <SectionWrapper id="education" Component={Edus} />
-        <SectionWrapper id="experience" Component={Exps} />
-        <SectionWrapper id="projects" Component={Projects} />
-        <SectionWrapper id="skills" Component={Skills} />
-        <SectionWrapper id="contact" Component={Footer} />
+        <section id="about">
+          <Abouts />
+        </section>
+        <section id="education">
+          <Edus />
+        </section>
+        <section id="experience">
+          <Exps />
+        </section>
+        <section id="projects">
+          <Projects />
+        </section>
+        <section id="skills">
+          <Skills />
+        </section>
       </main>
+      <Footer />
     </div>
-  );
-}
-
-function SectionWrapper({ id, Component }) {
-  const [ref, visible] = useScrollReveal(0.1);
-  return (
-    <section id={id} ref={ref} className={visible ? 'revealed' : ''}>
-      <Component />
-    </section>
   );
 }
 
