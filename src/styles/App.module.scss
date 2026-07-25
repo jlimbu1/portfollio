@@ -256,6 +256,8 @@ p, span, li {
   border-radius: var(--primary-border-radius);
   transition: color var(--primary-transition-duration) var(--primary-transition-timing),
               background var(--primary-transition-duration) var(--primary-transition-timing);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 .hamburger:hover {
   color: var(--primary-accent-color);

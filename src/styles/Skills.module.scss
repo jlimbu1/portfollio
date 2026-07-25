@@ -256,8 +256,6 @@ p, span, li {
   border-radius: var(--primary-border-radius);
   transition: color var(--primary-transition-duration) var(--primary-transition-timing),
               background var(--primary-transition-duration) var(--primary-transition-timing);
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
 }
 .hamburger:hover {
   color: var(--primary-accent-color);
@@ -574,165 +572,39 @@ footer h2::after {
 .socialLinks a:hover {
   background: rgba(14, 165, 233, 0.12);
   border-color: var(--primary-accent-color);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
 }
 
 .socialLinks i {
   font-size: 1.3rem;
-  color: var(--primary-accent-color);
+  color: var(--primary-text-color);
 }
 
 .copyright {
   color: var(--primary-muted-text);
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   margin-top: 24px;
 }
 
-/* ===== Timeline ===== */
-.timeline {
-  position: relative;
-  padding: 0;
-}
-
-.timeline::before {
-  content: '';
+/* ===== Mobile Nav ===== */
+.navOpen {
+  display: flex !important;
+  flex-direction: column;
   position: absolute;
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: linear-gradient(to bottom, var(--primary-accent-color), rgba(14, 165, 233, 0.1));
-  transform: translateX(-50%);
+  top: 70px;
+  left: 0;
+  right: 0;
+  background: var(--primary-nav-bg);
+  backdrop-filter: blur(12px);
+  padding: 16px 24px;
+  gap: 4px;
+  box-shadow: var(--primary-nav-shadow);
 }
 
-.timelineEntry {
-  position: relative;
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: 48px;
-  width: 100%;
-}
-
-.timelineEntry:last-child {
-  margin-bottom: 0;
-}
-
-.timelineEntryLeft {
-  flex-direction: row;
-}
-
-.timelineEntryRight {
-  flex-direction: row-reverse;
-}
-
-.timelineEntryLeft .timelineContent,
-.timelineEntryRight .timelineContent {
-  width: calc(50% - 40px);
-}
-
-.timelineEntryLeft .timelineContent {
-  padding-right: 0;
-}
-
-.timelineEntryRight .timelineContent {
-  padding-left: 0;
-}
-
-.timelineDot {
-  position: absolute;
-  left: 50%;
-  top: 24px;
-  transform: translate(-50%, -50%);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: var(--primary-card-bg);
-  border: 2px solid var(--primary-accent-color);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2;
-  box-shadow: 0 0 0 4px var(--primary-color);
-  transition: background var(--primary-transition-duration) var(--primary-transition-timing),
-              box-shadow var(--primary-transition-duration) var(--primary-transition-timing);
-}
-
-.timelineDot i {
-  font-size: 1rem;
-  color: var(--primary-accent-color);
-}
-
-.timelineEntry:hover .timelineDot {
-  background: var(--primary-accent-color);
-  box-shadow: 0 0 0 4px var(--primary-color), 0 0 20px rgba(14, 165, 233, 0.3);
-}
-
-.timelineEntry:hover .timelineDot i {
-  color: #fff;
-}
-
-.timelineContent {
-  background: var(--primary-card-bg);
-  border: 1px solid var(--primary-border-color);
+.navOpen a {
+  padding: 12px 16px;
   border-radius: var(--primary-border-radius);
-  padding: 24px;
-  box-shadow: var(--primary-shadow);
-  transition: border-color var(--primary-transition-duration) var(--primary-transition-timing),
-              background var(--primary-transition-duration) var(--primary-transition-timing),
-              transform var(--primary-transition-duration) var(--primary-transition-timing),
-              box-shadow var(--primary-transition-duration) var(--primary-transition-timing);
-}
-
-.timelineContent:hover {
-  border-color: var(--primary-accent-color);
-  background: var(--primary-card-hover-bg);
-  transform: translateY(-2px);
-  box-shadow: var(--primary-shadow-hover);
-}
-
-.timelineDate {
-  display: inline-block;
-  padding: 4px 12px;
-  background: rgba(14, 165, 233, 0.08);
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--primary-accent-color);
-  margin-bottom: 12px;
-}
-
-.timelineContent h4 {
-  font-size: 1.15rem;
-  margin-bottom: 4px;
-}
-
-.timelineSubtitle {
-  color: var(--primary-muted-text);
-  font-size: 0.9rem;
-  margin-bottom: 12px;
-}
-
-.timelineContent p {
-  font-size: 0.92rem;
-  margin: 0;
-}
-
-.timelineContent ul {
-  margin-top: 10px;
-}
-
-.timelineContent li {
-  padding: 4px 0;
-  font-size: 0.92rem;
-}
-
-.timelineContent li::before {
-  content: '\2022';
-  color: var(--primary-accent-color);
-  font-weight: bold;
-  display: inline-block;
-  width: 1em;
-  margin-left: -1em;
+  font-size: 1rem;
 }
 
 /* ===== Responsive: 1024px ===== */
@@ -745,14 +617,6 @@ footer h2::after {
     padding: 48px 0;
   }
 
-  .sectionHeader {
-    margin-bottom: 36px;
-  }
-
-  .sectionHeader h2 {
-    font-size: 1.75rem;
-  }
-
   .wrapper {
     gap: 32px;
   }
@@ -763,61 +627,21 @@ footer h2::after {
   }
 
   .eduGrid {
+    grid-template-columns: 1fr 1fr;
     gap: 24px;
   }
 
-  .timeline::before {
-    left: 20px;
-  }
-
-  .timelineEntry {
-    flex-direction: row !important;
-    padding-left: 60px;
+  .sectionHeader {
     margin-bottom: 36px;
   }
 
-  .timelineEntryLeft .timelineContent,
-  .timelineEntryRight .timelineContent {
-    width: 100%;
-    padding: 20px;
-  }
-
-  .timelineDot {
-    left: 20px;
-    top: 24px;
-    width: 32px;
-    height: 32px;
-  }
-
-  .timelineDot i {
-    font-size: 0.85rem;
-  }
-
-  .timelineDate {
-    font-size: 0.75rem;
-    padding: 3px 10px;
-  }
-
-  .timelineContent h4 {
-    font-size: 1.05rem;
-  }
-
-  .timelineSubtitle {
-    font-size: 0.85rem;
-  }
-
-  .timelineContent p,
-  .timelineContent li {
-    font-size: 0.88rem;
+  .sectionHeader h2 {
+    font-size: 1.75rem;
   }
 }
 
 /* ===== Responsive: 768px ===== */
 @media (max-width: 768px) {
-  html {
-    scroll-padding-top: 70px;
-  }
-
   .App {
     padding: 0 16px;
   }
@@ -831,7 +655,7 @@ footer h2::after {
   }
 
   .sectionHeader {
-    margin-bottom: 28px;
+    margin-bottom: 32px;
   }
 
   .sectionHeader h2 {
@@ -842,11 +666,7 @@ footer h2::after {
     font-size: 0.9rem;
   }
 
-  h2 {
-    font-size: 1.5rem;
-  }
-
-  /* Nav mobile */
+  /* Nav */
   .navInner {
     height: 60px;
     padding: 0 16px;
@@ -856,35 +676,25 @@ footer h2::after {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 44px;
+    height: 44px;
+    font-size: 1.4rem;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
   }
 
   .navLinks {
-    position: fixed;
-    top: 60px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding-top: 32px;
-    gap: 8px;
-    background: var(--primary-nav-bg);
-    backdrop-filter: blur(12px);
-    transform: translateX(100%);
-    transition: transform 0.3s ease;
-    z-index: 99;
+    display: none;
   }
 
   .navOpen {
-    transform: translateX(0);
+    top: 60px;
+    padding: 12px 16px;
   }
 
-  .navLinks a {
-    font-size: 1.1rem;
-    padding: 12px 24px;
-    width: 80%;
-    text-align: center;
+  .logo img {
+    width: 40px;
+    height: 40px;
   }
 
   /* About */
@@ -903,7 +713,20 @@ footer h2::after {
     min-width: unset;
   }
 
-  /* Education grid */
+  /* Cards */
+  .card {
+    padding: 20px;
+  }
+
+  .card h4 {
+    font-size: 1.05rem;
+  }
+
+  .card li {
+    font-size: 0.88rem;
+  }
+
+  /* Education Grid */
   .eduGrid {
     grid-template-columns: 1fr;
     gap: 20px;
@@ -914,59 +737,14 @@ footer h2::after {
     height: 60px;
   }
 
-  /* Timeline */
-  .timeline::before {
-    left: 16px;
-  }
-
-  .timelineEntry {
-    padding-left: 48px;
-    margin-bottom: 28px;
-  }
-
-  .timelineDot {
-    left: 16px;
-    top: 20px;
-    width: 28px;
-    height: 28px;
-  }
-
-  .timelineDot i {
-    font-size: 0.75rem;
-  }
-
-  .timelineContent {
-    padding: 16px;
-  }
-
-  .timelineDate {
-    font-size: 0.7rem;
-    padding: 2px 8px;
-    margin-bottom: 8px;
-  }
-
-  .timelineContent h4 {
-    font-size: 1rem;
-  }
-
-  .timelineSubtitle {
-    font-size: 0.8rem;
-    margin-bottom: 8px;
-  }
-
-  .timelineContent p,
-  .timelineContent li {
-    font-size: 0.85rem;
-  }
-
   /* Skills */
-  .skills ul {
-    gap: 8px;
+  .skills h4 {
+    font-size: 0.88rem;
   }
 
   .skills li {
-    padding: 6px 10px;
-    font-size: 0.8rem;
+    padding: 6px 12px;
+    font-size: 0.82rem;
   }
 
   .skills i {
@@ -978,15 +756,7 @@ footer h2::after {
   }
 
   .skillBarLabel {
-    font-size: 0.8rem;
-  }
-
-  .skillBarLabelLeft i {
-    font-size: 1rem;
-  }
-
-  .skillBarPercent {
-    font-size: 0.72rem;
+    font-size: 0.82rem;
   }
 
   .skillBarTrack {
@@ -994,13 +764,17 @@ footer h2::after {
   }
 
   /* Footer */
+  footer {
+    padding-bottom: 36px !important;
+  }
+
   .socialLinks {
     gap: 16px;
   }
 
   .socialLinks a {
-    width: 40px;
-    height: 40px;
+    width: 42px;
+    height: 42px;
   }
 
   .socialLinks i {
@@ -1012,7 +786,7 @@ footer h2::after {
   }
 }
 
-/* ===== Responsive: 480px (small mobile) ===== */
+/* ===== Responsive: 480px ===== */
 @media (max-width: 480px) {
   .App {
     padding: 0 12px;
@@ -1022,18 +796,33 @@ footer h2::after {
     padding: 32px 0;
   }
 
+  .sectionHeader {
+    margin-bottom: 24px;
+  }
+
   .sectionHeader h2 {
     font-size: 1.35rem;
   }
 
   .sectionHeader .sectionSubtitle {
-    font-size: 0.82rem;
+    font-size: 0.85rem;
   }
 
-  h2 {
-    font-size: 1.35rem;
+  /* Nav */
+  .navInner {
+    padding: 0 12px;
   }
 
+  .navOpen {
+    padding: 10px 12px;
+  }
+
+  .navOpen a {
+    padding: 10px 14px;
+    font-size: 0.95rem;
+  }
+
+  /* About */
   .pfp {
     width: 120px;
     height: 120px;
@@ -1047,6 +836,7 @@ footer h2::after {
     font-size: 0.9rem;
   }
 
+  /* Cards */
   .card {
     padding: 16px;
   }
@@ -1056,53 +846,34 @@ footer h2::after {
   }
 
   .card .date {
-    font-size: 0.78rem;
+    font-size: 0.8rem;
   }
 
   .card li {
-    font-size: 0.85rem;
+    font-size: 0.84rem;
+  }
+
+  /* Education Grid */
+  .eduGrid {
+    gap: 16px;
   }
 
   .eduGrid .card {
     padding: 20px;
   }
 
-  .timeline::before {
-    left: 12px;
+  .eduGrid img {
+    height: 50px;
   }
 
-  .timelineEntry {
-    padding-left: 40px;
-    margin-bottom: 24px;
-  }
-
-  .timelineDot {
-    left: 12px;
-    top: 18px;
-    width: 24px;
-    height: 24px;
-  }
-
-  .timelineDot i {
-    font-size: 0.7rem;
-  }
-
-  .timelineContent {
-    padding: 14px;
-  }
-
-  .timelineContent h4 {
-    font-size: 0.95rem;
-  }
-
-  .timelineContent p,
-  .timelineContent li {
-    font-size: 0.82rem;
+  /* Skills */
+  .skills ul {
+    gap: 8px;
   }
 
   .skills li {
-    padding: 5px 8px;
-    font-size: 0.75rem;
+    padding: 6px 10px;
+    font-size: 0.78rem;
   }
 
   .skills i {
@@ -1110,15 +881,16 @@ footer h2::after {
   }
 
   .skillBarLabel {
-    font-size: 0.75rem;
-  }
-
-  .skillBarLabelLeft i {
-    font-size: 0.9rem;
+    font-size: 0.78rem;
   }
 
   .skillBarPercent {
-    font-size: 0.68rem;
+    font-size: 0.72rem;
+  }
+
+  /* Footer */
+  footer {
+    padding-bottom: 28px !important;
   }
 
   .socialLinks {
@@ -1126,8 +898,8 @@ footer h2::after {
   }
 
   .socialLinks a {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
   }
 
   .socialLinks i {
@@ -1135,12 +907,12 @@ footer h2::after {
   }
 
   .copyright {
-    font-size: 0.72rem;
+    font-size: 0.74rem;
   }
 }
 
-/* ===== Responsive: 320px (minimum) ===== */
-@media (max-width: 320px) {
+/* ===== Responsive: 320px ===== */
+@media (max-width: 360px) {
   .App {
     padding: 0 8px;
   }
@@ -1154,13 +926,35 @@ footer h2::after {
   }
 
   .sectionHeader .sectionSubtitle {
-    font-size: 0.75rem;
+    font-size: 0.8rem;
   }
 
-  h2 {
+  /* Nav */
+  .navInner {
+    padding: 0 8px;
+  }
+
+  .logo img {
+    width: 34px;
+    height: 34px;
+  }
+
+  .hamburger {
+    width: 40px;
+    height: 40px;
     font-size: 1.2rem;
   }
 
+  .navOpen {
+    padding: 8px;
+  }
+
+  .navOpen a {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+
+  /* About */
   .pfp {
     width: 100px;
     height: 100px;
@@ -1171,74 +965,51 @@ footer h2::after {
   }
 
   .abouts p {
-    font-size: 0.82rem;
+    font-size: 0.84rem;
   }
 
+  /* Cards */
   .card {
-    padding: 12px;
+    padding: 14px;
   }
 
   .card h4 {
-    font-size: 0.9rem;
+    font-size: 0.92rem;
   }
 
   .card .date {
-    font-size: 0.7rem;
+    font-size: 0.76rem;
   }
 
   .card li {
-    font-size: 0.78rem;
+    font-size: 0.8rem;
+  }
+
+  /* Education Grid */
+  .eduGrid {
+    gap: 12px;
   }
 
   .eduGrid .card {
     padding: 16px;
   }
 
-  .timeline::before {
-    left: 8px;
+  .eduGrid img {
+    height: 40px;
   }
 
-  .timelineEntry {
-    padding-left: 32px;
-    margin-bottom: 20px;
+  /* Skills */
+  .skills h4 {
+    font-size: 0.8rem;
   }
 
-  .timelineDot {
-    left: 8px;
-    top: 16px;
-    width: 20px;
-    height: 20px;
-  }
-
-  .timelineDot i {
-    font-size: 0.6rem;
-  }
-
-  .timelineContent {
-    padding: 10px;
-  }
-
-  .timelineDate {
-    font-size: 0.65rem;
-    padding: 2px 6px;
-  }
-
-  .timelineContent h4 {
-    font-size: 0.85rem;
-  }
-
-  .timelineSubtitle {
-    font-size: 0.72rem;
-  }
-
-  .timelineContent p,
-  .timelineContent li {
-    font-size: 0.75rem;
+  .skills ul {
+    gap: 6px;
   }
 
   .skills li {
-    padding: 4px 6px;
-    font-size: 0.7rem;
+    padding: 5px 8px;
+    font-size: 0.74rem;
   }
 
   .skills i {
@@ -1246,19 +1017,20 @@ footer h2::after {
   }
 
   .skillBarLabel {
-    font-size: 0.7rem;
-  }
-
-  .skillBarLabelLeft i {
-    font-size: 0.8rem;
+    font-size: 0.74rem;
   }
 
   .skillBarPercent {
-    font-size: 0.62rem;
+    font-size: 0.68rem;
   }
 
   .skillBarTrack {
     height: 5px;
+  }
+
+  /* Footer */
+  footer {
+    padding-bottom: 24px !important;
   }
 
   .socialLinks {
@@ -1266,8 +1038,8 @@ footer h2::after {
   }
 
   .socialLinks a {
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
   }
 
   .socialLinks i {
@@ -1275,6 +1047,6 @@ footer h2::after {
   }
 
   .copyright {
-    font-size: 0.68rem;
+    font-size: 0.7rem;
   }
 }
