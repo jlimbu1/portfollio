@@ -23,17 +23,6 @@ function Nav() {
 
     const closeMenu = () => setShow(false);
 
-    const handleKeyDown = useCallback((e) => {
-        if (e.key === 'Escape' && show) {
-            setShow(false);
-        }
-    }, [show]);
-
-    useEffect(() => {
-        document.addEventListener('keydown', handleKeyDown);
-        return () => document.removeEventListener('keydown', handleKeyDown);
-    }, [handleKeyDown]);
-
     return (
         <header className={`${st.nav} ${scrolled ? st.navScrolled : ''}`} role="banner">
             <div className={st.navInner}>
@@ -44,38 +33,35 @@ function Nav() {
                 <button
                     className={st.hamburger}
                     onClick={() => setShow(!show)}
-                    aria-label={show ? "Close navigation menu" : "Open navigation menu"}
+                    aria-label="Toggle navigation"
                     aria-expanded={show}
-                    aria-controls="primary-navigation"
+                    aria-controls="main-navigation"
                 >
                     <FontAwesomeIcon icon={show ? faX : faBars} aria-hidden="true" />
                 </button>
 
                 <nav
-                    id="primary-navigation"
+                    id="main-navigation"
                     className={`${st.navLinks} ${show ? st.navOpen : ''}`}
                     role="navigation"
-                    aria-label="Primary navigation"
+                    aria-label="Main navigation"
                 >
-                    <ul role="list" className={st.navList}>
-                        {[
-                            ['abouts', 'About'],
-                            ['timeline', 'Timeline'],
-                            ['skills', 'Skills'],
-                            ['contacts', 'Contact'],
-                        ].map(([id, label]) => (
-                            <li key={id} role="listitem">
-                                <a
-                                    href={`#${id}`}
-                                    className={active === id ? st.navActive : ''}
-                                    onClick={closeMenu}
-                                    aria-current={active === id ? 'true' : undefined}
-                                >
-                                    {label}
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
+                    {[
+                        ['abouts', 'About'],
+                        ['timeline', 'Timeline'],
+                        ['skills', 'Skills'],
+                        ['contacts', 'Contact'],
+                    ].map(([id, label]) => (
+                        <a
+                            key={id}
+                            href={`#${id}`}
+                            className={active === id ? st.navActive : ''}
+                            onClick={closeMenu}
+                            aria-current={active === id ? 'true' : undefined}
+                        >
+                            {label}
+                        </a>
+                    ))}
                 </nav>
             </div>
         </header>
