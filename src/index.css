@@ -52,6 +52,40 @@ img {
   background: #94a3b8;
 }
 
+/* Focus visible styles for keyboard navigation */
+:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Remove default focus outline for mouse users, keep for keyboard */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Skip to main content link - visually hidden until focused */
+.skip-to-main {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  z-index: 1000;
+  padding: 12px 24px;
+  background: #2563eb;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-decoration: none;
+  border-radius: 0 0 4px 0;
+  transition: top 0.2s ease;
+}
+
+.skip-to-main:focus {
+  top: 0;
+  outline: 2px solid #ffffff;
+  outline-offset: -4px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

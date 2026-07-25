@@ -52,7 +52,11 @@ const skillCategories = [
 
 const scrollTo = (id) => {
     const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+        el.setAttribute('tabindex', '-1');
+        el.focus({ preventScroll: true });
+    }
 };
 
 function SkillRing({ icon, label, proficiency, target, index }) {
@@ -72,28 +76,24 @@ function SkillRing({ icon, label, proficiency, target, index }) {
         }
     };
 
+    const isClickable = Boolean(target);
     const ariaLabel = target
-        ? `${label}: ${proficiency}% proficiency. Click to jump to ${label} usage`
+        ? `${label}: ${proficiency}% proficiency. Press Enter to jump to ${label} usage`
         : `${label}: ${proficiency}% proficiency`;
 
     return (
         <div
             ref={ref}
-            className={`${st.skillRing} ${visible ? st.skillRingVisible : ''} ${target ? st.skillRingClickable : st.noAction}`}
+            className={`${st.skillRing} ${visible ? st.skillRingVisible : ''} ${isClickable ? st.skillRingClickable : st.noAction}`}
             onClick={handleClick}
             onKeyDown={handleKeyDown}
-            role={target ? 'button' : 'img'}
-            tabIndex={target ? 0 : -1}
+            role={isClickable ? 'button' : 'img'}
+            tabIndex={isClickable ? 0 : -1}
             aria-label={ariaLabel}
             title={target ? `Jump to ${label} usage` : `${label}: ${proficiency}%`}
             style={{ transitionDelay: `${index * 0.08}s` }}
         >
-            <svg
-                className={st.skillRingSvg}
-                viewBox="0 0 100 100"
-                aria-hidden="true"
-                focusable="false"
-            >
+            <svg className={st.skillRingSvg} viewBox="0 0 100 100" aria-hidden="true" focusable="false">
                 <circle
                     className={st.skillRingBg}
                     cx="50"
