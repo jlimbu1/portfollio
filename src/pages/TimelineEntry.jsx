@@ -1,47 +1,115 @@
 import React from 'react';
+import st from '../styles/App.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGraduationCap, faBriefcase, faCode } from '@fortawesome/free-solid-svg-icons';
-import st from '../styles/Timeline.module.scss';
+import {
+  faGraduationCap,
+  faBriefcase,
+  faCode,
+  faCalendarAlt,
+  faMapMarkerAlt,
+} from '@fortawesome/free-solid-svg-icons';
 
-const TYPE_CONFIG = {
-  education: { icon: faGraduationCap, label: 'Education' },
-  experience: { icon: faBriefcase, label: 'Experience' },
-  project: { icon: faCode, label: 'Project' },
+const typeConfig = {
+  education: {
+    icon: faGraduationCap,
+    label: 'Education',
+  },
+  experience: {
+    icon: faBriefcase,
+    label: 'Experience',
+  },
+  project: {
+    icon: faCode,
+    label: 'Project',
+  },
 };
 
-function TimelineEntry({ entry, side, index }) {
-  if (!entry) {
-    return null;
-  }
+function TimelineEntry({ entry, index, totalEntries }) {
+  const config = typeConfig[entry.type] || typeConfig.project;
+  const isLeft = index % 2 === 0;
+  const sideClass = isLeft ? st.timelineEntryLeft : st.timelineEntryRight;
 
-  const config = TYPE_CONFIG[entry.type] || TYPE_CONFIG.project;
-  const dateText = entry.startDate || entry.date || '';
-  const title = entry.title || entry.name || entry.degree || '';
-  const subtitle = entry.subtitle || entry.company || entry.school || entry.organization || '';
-  const description = entry.description || entry.summary || '';
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      if (entry.link) {
+        window.open(entry.link, '_blank', 'noopener,noreferrer');
+      }
+    }
+  };
+
+  const entryId = `timeline-entry-${index}`;
 
   return (
     <div
-      className={`${st.timelineEntry} ${st[`timelineEntry${side.charAt(0).toUpperCase() + side.slice(1)}`]}`}
-      style={{ transitionDelay: `${index * 0.1}s` }}
+      className={`${st.timelineEntry} ${sideClass}`}
+      role="article"
+      aria-labelledby={`${entryId}-title`}
+      aria-describedby={`${entryId}-desc`}
     >
-      <div className={st.timelineEntryBadge}>
-        <FontAwesomeIcon icon={config.icon} className={st.timelineEntryIcon} aria-hidden="true" />
-        <span className={st.timelineEntryType}>{config.label}</span>
+      <div className={st.timelineEntryDot} aria-hidden="true">
+        <FontAwesomeIcon icon={config.icon} />
       </div>
 
-      <div className={st.timelineEntryCard}>
-        {dateText && (
-          <time className={st.timelineEntryDate} dateTime={dateText}>
-            {dateText}
-          </time>
+      <div
+        className={st.timelineEntryCard}
+        tabIndex={0}
+        role={entry.link ? 'link' : 'region'}
+        aria-label={`${config.label}: ${entry.title} at ${entry.organization || entry.subtitle || ''}`}
+        onKeyDown={handleKeyDown}
+      >
+        <div className={st.timelineEntryHeader}>
+          <span className={st.timelineEntryType} aria-hidden="true">
+            <FontAwesomeIcon icon={config.icon} /> {config.label}
+          </span>
+          <span className={st.timelineEntryDate} aria-label={`Date: ${entry.date}`}>
+            <FontAwesomeIcon icon={faCalendarAlt} aria-hidden="true" /> {entry.date}
+          </span>
+        </div>
+
+        <h3 id={`${entryId}-title`} className={st.timelineEntryTitle}>
+          {entry.title}
+        </h3>
+
+        {entry.organization && (
+          <p className={st.timelineEntryOrg}>
+            <FontAwesomeIcon icon={faMapMarkerAlt} aria-hidden="true" /> {entry.organization}
+          </p>
         )}
-        {title && <h3 className={st.timelineEntryTitle}>{title}</h3>}
-        {subtitle && <p className={st.timelineEntrySubtitle}>{subtitle}</p>}
-        {description && <p className={st.timelineEntryDescription}>{description}</p>}
+
+        {entry.subtitle && !entry.organization && (
+          <p className={st.timelineEntryOrg}>{entry.subtitle}</p>
+        )}
+
+        <p id={`${entryId}-desc`} className={st.timelineEntryDesc}>
+          {entry.description}
+        </p>
+
+        {entry.tags && entry.tags.length > 0 && (
+          <div className={st.timelineEntryTags} aria-label="Technologies used">
+            {entry.tags.map((tag) => (
+              <span key={tag} className={st.timelineEntryTag}>
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {entry.link && (
+          <a
+            href={entry.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={st.timelineEntryLink}
+            aria-label={`View ${entry.title} (opens in new tab)`}
+            tabIndex={-1}
+          >
+            View Project
+          </a>
+        )}
       </div>
 
-      <div className={st.timelineEntryDot} aria-hidden="true" />
+      <div className={st.timelineEntryLine} aria-hidden="true" />
     </div>
   );
 }
