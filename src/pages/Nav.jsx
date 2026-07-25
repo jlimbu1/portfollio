@@ -1,20 +1,28 @@
-import st from '../styles/App.module.scss'
-import React, { useState, useCallback, useEffect } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars, faX } from '@fortawesome/free-solid-svg-icons'
-import useScrollSpy from '../hooks/useScrollSpy'
+import React from 'react';
+import { useScrollSpy } from '../hooks/useScrollSpy';
 
-const sections = ['abouts', 'timeline', 'skills', 'contacts'];
+const sectionIds = ['about', 'education', 'experience', 'projects', 'skills'];
 
-function Nav() {
-    const [scrolled, setScrolled] = useState(false);
-    const [show, setShow] = useState(false);
-    const active = useScrollSpy(sections, 120);
+const Nav = () => {
+  const active = useScrollSpy(sectionIds, 100);
 
-    const handleScroll = useCallback(() => {
-        setScrolled(window.scrollY > 50);
-        setShow(false);
-    }, []);
+  return (
+    <nav>
+      <ul>
+        {sectionIds.map((id) => (
+          <li key={id}>
+            <a
+              href={`#${id}`}
+              className={active === id ? 'active' : ''}
+            >
+              {id.charAt(0).toUpperCase() + id.slice(1)}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+};
 
     useEffect(() => {
         window.addEventListener("scroll", handleScroll, { passive: true });
@@ -23,37 +31,59 @@ function Nav() {
 
     const closeMenu = () => setShow(false);
 
+    const handleKeyDown = useCallback((e) => {
+        if (e.key === 'Escape' && show) {
+            setShow(false);
+        }
+    }, [show]);
+
+    useEffect(() => {
+        document.addEventListener('keydown', handleKeyDown);
+        return () => document.removeEventListener('keydown', handleKeyDown);
+    }, [handleKeyDown]);
+
     return (
-        <header className={`${st.nav} ${scrolled ? st.navScrolled : ''}`}>
+        <header className={`${st.nav} ${scrolled ? st.navScrolled : ''}`} role="banner">
             <div className={st.navInner}>
-                <a className={st.logo} href="#abouts" onClick={closeMenu}>
-                    <img src="https://i.imgur.com/YLt0FBm.jpg" alt="logo" />
+                <a className={st.logo} href="#abouts" onClick={closeMenu} aria-label="Go to About section">
+                    <img src="https://i.imgur.com/YLt0FBm.jpg" alt="Jimmy Limbu logo" />
                 </a>
 
                 <button
                     className={st.hamburger}
                     onClick={() => setShow(!show)}
-                    aria-label="Toggle navigation"
+                    aria-label={show ? "Close navigation menu" : "Open navigation menu"}
+                    aria-expanded={show}
+                    aria-controls="primary-navigation"
                 >
-                    <FontAwesomeIcon icon={show ? faX : faBars} />
+                    <FontAwesomeIcon icon={show ? faX : faBars} aria-hidden="true" />
                 </button>
 
-                <nav className={`${st.navLinks} ${show ? st.navOpen : ''}`}>
-                    {[
-                        ['abouts', 'About'],
-                        ['timeline', 'Timeline'],
-                        ['skills', 'Skills'],
-                        ['contacts', 'Contact'],
-                    ].map(([id, label]) => (
-                        <a
-                            key={id}
-                            href={`#${id}`}
-                            className={active === id ? st.navActive : ''}
-                            onClick={closeMenu}
-                        >
-                            {label}
-                        </a>
-                    ))}
+                <nav
+                    id="primary-navigation"
+                    className={`${st.navLinks} ${show ? st.navOpen : ''}`}
+                    role="navigation"
+                    aria-label="Primary navigation"
+                >
+                    <ul role="list" className={st.navList}>
+                        {[
+                            ['abouts', 'About'],
+                            ['timeline', 'Timeline'],
+                            ['skills', 'Skills'],
+                            ['contacts', 'Contact'],
+                        ].map(([id, label]) => (
+                            <li key={id} role="listitem">
+                                <a
+                                    href={`#${id}`}
+                                    className={active === id ? st.navActive : ''}
+                                    onClick={closeMenu}
+                                    aria-current={active === id ? 'true' : undefined}
+                                >
+                                    {label}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
                 </nav>
             </div>
         </header>
