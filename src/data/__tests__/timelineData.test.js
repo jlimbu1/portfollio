@@ -46,6 +46,20 @@ describe('timelineData', () => {
       const uniqueIds = new Set(ids);
       expect(uniqueIds.size).toBe(ids.length);
     });
+
+    it('each entry should have a parseable date string', () => {
+      educationData.forEach((entry) => {
+        expect(entry.date).toBeTruthy();
+        expect(typeof entry.date).toBe('string');
+        const trimmed = entry.date.trim();
+        expect(trimmed.length).toBeGreaterThan(0);
+        const datePattern = /^(19|20)\d{2}(-\d{2}(-\d{2})?)?$/;
+        const rangePattern = /^(19|20)\d{2}\s*(-|to|–|—)\s*(19|20)\d{2}$/i;
+        const presentPattern = /^(19|20)\d{2}\s*(-|to|–|—)\s*Present$/i;
+        const isValid = datePattern.test(trimmed) || rangePattern.test(trimmed) || presentPattern.test(trimmed);
+        expect(isValid).toBe(true);
+      });
+    });
   });
 
   describe('experienceData', () => {
@@ -93,6 +107,20 @@ describe('timelineData', () => {
       const uniqueIds = new Set(ids);
       expect(uniqueIds.size).toBe(ids.length);
     });
+
+    it('each entry should have a parseable date string', () => {
+      experienceData.forEach((entry) => {
+        expect(entry.date).toBeTruthy();
+        expect(typeof entry.date).toBe('string');
+        const trimmed = entry.date.trim();
+        expect(trimmed.length).toBeGreaterThan(0);
+        const datePattern = /^(19|20)\d{2}(-\d{2}(-\d{2})?)?$/;
+        const rangePattern = /^(19|20)\d{2}\s*(-|to|–|—)\s*(19|20)\d{2}$/i;
+        const presentPattern = /^(19|20)\d{2}\s*(-|to|–|—)\s*Present$/i;
+        const isValid = datePattern.test(trimmed) || rangePattern.test(trimmed) || presentPattern.test(trimmed);
+        expect(isValid).toBe(true);
+      });
+    });
   });
 
   describe('projectData', () => {
@@ -131,6 +159,136 @@ describe('timelineData', () => {
       const ids = projectData.map((p) => p.id);
       const uniqueIds = new Set(ids);
       expect(uniqueIds.size).toBe(ids.length);
+    });
+
+    it('each entry should have a parseable date string', () => {
+      projectData.forEach((entry) => {
+        expect(entry.date).toBeTruthy();
+        expect(typeof entry.date).toBe('string');
+        const trimmed = entry.date.trim();
+        expect(trimmed.length).toBeGreaterThan(0);
+        const datePattern = /^(19|20)\d{2}(-\d{2}(-\d{2})?)?$/;
+        const rangePattern = /^(19|20)\d{2}\s*(-|to|–|—)\s*(19|20)\d{2}$/i;
+        const presentPattern = /^(19|20)\d{2}\s*(-|to|–|—)\s*Present$/i;
+        const isValid = datePattern.test(trimmed) || rangePattern.test(trimmed) || presentPattern.test(trimmed);
+        expect(isValid).toBe(true);
+      });
+    });
+  });
+
+  describe('cross-data integrity', () => {
+    it('should have no duplicate ids across all data sets', () => {
+      const allIds = [
+        ...educationData.map((e) => e.id),
+        ...experienceData.map((e) => e.id),
+        ...projectData.map((e) => e.id),
+      ];
+      const uniqueIds = new Set(allIds);
+      expect(uniqueIds.size).toBe(allIds.length);
+    });
+
+    it('should have correct type values for each data set', () => {
+      educationData.forEach((entry) => {
+        expect(entry.type).toBe('education');
+      });
+      experienceData.forEach((entry) => {
+        expect(entry.type).toBe('experience');
+      });
+      projectData.forEach((entry) => {
+        expect(entry.type).toBe('project');
+      });
+    });
+
+    it('should have no entries with empty or whitespace-only required string fields', () => {
+      const allEntries = [
+        ...educationData,
+        ...experienceData,
+        ...projectData,
+      ];
+      allEntries.forEach((entry) => {
+        expect(entry.id).toBeTruthy();
+        expect(entry.id.trim().length).toBeGreaterThan(0);
+        expect(entry.title).toBeTruthy();
+        expect(entry.title.trim().length).toBeGreaterThan(0);
+        expect(entry.date).toBeTruthy();
+        expect(entry.date.trim().length).toBeGreaterThan(0);
+        expect(entry.description).toBeTruthy();
+        expect(entry.description.trim().length).toBeGreaterThan(0);
+      });
+    });
+  });
+
+  describe('edge cases', () => {
+    it('should handle empty arrays gracefully when imported', () => {
+      expect(Array.isArray(educationData)).toBe(true);
+      expect(Array.isArray(experienceData)).toBe(true);
+      expect(Array.isArray(projectData)).toBe(true);
+    });
+
+    it('should not contain entries with null or undefined values for required fields', () => {
+      const allEntries = [
+        ...educationData,
+        ...experienceData,
+        ...projectData,
+      ];
+      allEntries.forEach((entry) => {
+        expect(entry.id).not.toBeNull();
+        expect(entry.id).not.toBeUndefined();
+        expect(entry.title).not.toBeNull();
+        expect(entry.title).not.toBeUndefined();
+        expect(entry.date).not.toBeNull();
+        expect(entry.date).not.toBeUndefined();
+        expect(entry.description).not.toBeNull();
+        expect(entry.description).not.toBeUndefined();
+        expect(entry.type).not.toBeNull();
+        expect(entry.type).not.toBeUndefined();
+      });
+    });
+
+    it('should have valid type values across all entries', () => {
+      const validTypes = ['education', 'experience', 'project'];
+      const allEntries = [
+        ...educationData,
+        ...experienceData,
+        ...projectData,
+      ];
+      allEntries.forEach((entry) => {
+        expect(validTypes).toContain(entry.type);
+      });
+    });
+
+    it('should have no entries with malformed date strings', () => {
+      const allEntries = [
+        ...educationData,
+        ...experienceData,
+        ...projectData,
+      ];
+      const malformedPatterns = [
+        /^\s*$/,
+        /^null$/i,
+        /^undefined$/i,
+        /^NaN$/i,
+        /^Invalid Date$/i,
+      ];
+      allEntries.forEach((entry) => {
+        const dateStr = entry.date;
+        expect(typeof dateStr).toBe('string');
+        const isMalformed = malformedPatterns.some((pattern) => pattern.test(dateStr));
+        expect(isMalformed).toBe(false);
+      });
+    });
+
+    it('should have ids that are non-empty strings without leading or trailing whitespace', () => {
+      const allEntries = [
+        ...educationData,
+        ...experienceData,
+        ...projectData,
+      ];
+      allEntries.forEach((entry) => {
+        expect(typeof entry.id).toBe('string');
+        expect(entry.id.length).toBeGreaterThan(0);
+        expect(entry.id).toBe(entry.id.trim());
+      });
     });
   });
 });
