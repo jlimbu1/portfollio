@@ -1,40 +1,27 @@
-@use '../../styles/Const.module.scss' as *;
-
-.skill {
+.skillRing {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  align-items: center;
+  text-align: center;
   padding: 1rem;
-  background: $card-bg;
-  border-radius: 12px;
-  transition: $transition;
-  border: 1px solid $border-color;
+}
 
-  &:hover {
-    transform: translateY(-3px);
-    border-color: rgba($primary, 0.5);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  }
+.circleBg {
+  transition: stroke-dashoffset 1s ease;
+}
+
+.circleProgress {
+  transition: stroke-dashoffset 1s ease;
+}
+
+.percentage {
+  font-size: 1.2rem;
+  font-weight: 600;
+  fill: var(--color-heading, #2c3e50);
 }
 
 .name {
-  font-weight: 500;
-  font-size: 1.1rem;
-  color: $light;
-}
-
-.barTrack {
-  width: 100%;
-  height: 6px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
-  overflow: hidden;
-}
-
-.barFill {
-  height: 100%;
-  background: linear-gradient(90deg, $primary, lighten($primary, 10%));
-  border-radius: 6px;
-  transition: width 1s ease-in-out;
-  width: 0;
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  color: #555;
 }

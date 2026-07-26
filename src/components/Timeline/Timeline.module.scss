@@ -1,88 +1,167 @@
-@use '../../styles/Const.module.scss' as *;
-
-.timelineWrapper {
-  position: relative;
-  max-width: 800px;
+.timelineSection {
+  padding: 4rem 1rem;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem 0;
 }
 
-.timelineLine {
-  position: absolute;
-  left: 6px;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: rgba($primary, 0.3);
-  transform: translateX(-50%);
+.heading {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  color: var(--color-heading, #2c3e50);
 }
 
 .timeline {
+  position: relative;
   list-style: none;
   padding: 0;
   margin: 0;
-}
 
-.timelineItem {
-  position: relative;
-  margin-bottom: 2rem;
-  padding-left: 2rem;
-
+  // Vertical line
   &::before {
     content: '';
     position: absolute;
-    left: 0;
-    top: 0.5rem;
-    width: 12px;
-    height: 12px;
-    background: $primary;
-    border-radius: 50%;
-    border: 2px solid $dark;
-    z-index: 2;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background: #e0e0e0;
+    transform: translateX(-50%);
   }
 }
 
-.hidden {
+.entry {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 2.5rem;
+  position: relative;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.6s ease, transform 0.6s ease;
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.visible {
-  opacity: 1;
-  transform: translateY(0);
+.left {
+  flex-direction: row;
+  .dateBadge { margin-right: 1rem; }
+  .content { text-align: right; }
+}
+
+.right {
+  flex-direction: row-reverse;
+  .dateBadge { margin-left: 1rem; }
+  .content { text-align: left; }
+}
+
+.dateBadge {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  background: var(--color-primary, #3498db);
+  color: #fff;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+  margin-top: 0.5rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.icon {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  top: 1.8rem;
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  border: 2px solid #e0e0e0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  font-size: 1rem;
+  color: var(--color-primary, #3498db);
+}
+
+.iconLabel {
+  position: absolute;
+  font-size: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 1px;
 }
 
 .content {
-  background: $card-bg;
-  padding: 1.5rem;
+  flex: 1 1 60%;
+  padding: 1rem;
+  background: #fff;
   border-radius: 8px;
-  border: 1px solid $border-color;
-}
-
-.date {
-  display: inline-block;
-  font-size: 0.85rem;
-  padding: 0.25rem 0.75rem;
-  background: rgba($primary, 0.15);
-  color: $primary;
-  border-radius: 20px;
-  margin-bottom: 0.5rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
 .title {
   font-size: 1.2rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
+  color: var(--color-heading, #2c3e50);
 }
 
-.org {
-  font-size: 0.95rem;
-  color: $grey;
+.subtitle {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text-light, #7f8c8d);
   margin-bottom: 0.5rem;
 }
 
 .description {
-  font-size: 0.95rem;
-  line-height: 1.5;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #34495e;
+}
+
+// Responsive: mobile breakpoint
+@media (max-width: 768px) {
+  .timeline::before {
+    left: 2rem;
+  }
+
+  .entry {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 4rem;
+    margin-bottom: 2rem;
+
+    .icon {
+      left: 2rem;
+      top: 1.5rem;
+    }
+
+    .dateBadge {
+      margin: 0 0 0.5rem 0;
+    }
+
+    .content {
+      text-align: left;
+    }
+  }
+
+  .left, .right {
+    flex-direction: column;
+    align-items: flex-start;
+    .dateBadge { margin: 0 0 0.5rem 0; }
+    .content { text-align: left; }
+  }
+
+  .heading {
+    font-size: 2rem;
+  }
 }

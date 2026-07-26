@@ -1,55 +1,66 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useMemo } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGraduationCap, faBriefcase, faCode } from '@fortawesome/free-solid-svg-icons';
+import useScrollReveal from '../../hooks/useScrollReveal';
 import { educationData, experienceData, projectData } from '../../data/timelineData';
 import styles from './Timeline.module.scss';
 
-const allData = [...educationData, ...experienceData, ...projectData].sort((a, b) => {
-  const yearA = parseInt(a.date.split(' - ')[0]);
-  const yearB = parseInt(b.date.split(' - ')[0]);
-  return yearA - yearB;
-});
+const typeConfig = {
+  education: { icon: faGraduationCap, label: 'Education' },
+  experience: { icon: faBriefcase, label: 'Work' },
+  project: { icon: faCode, label: 'Project' }
+};
+
+const getStartYear = (dateStr) => {
+  const match = dateStr.match(/^(\d{4})/);
+  return match ? parseInt(match[1], 10) : 0;
+};
 
 const Timeline = () => {
-  const [visibleItems, setVisibleItems] = useState(new Set());
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setVisibleItems((prev) => new Set([...prev, entry.target.dataset.index]));
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const items = document.querySelectorAll(`.${styles.timelineItem}`);
-    items.forEach((item) => observer.observe(item));
-    return () => observer.disconnect();
+  const entries = useMemo(() => {
+    const all = [
+      ...educationData.map(e => ({ ...e, type: 'education' })),
+      ...experienceData.map(e => ({ ...e, type: 'experience' })),
+      ...projectData.map(e => ({ ...e, type: 'project' }))
+    ];
+    return all.sort((a, b) => getStartYear(a.date) - getStartYear(b.date));
   }, []);
 
   return (
-    <div className={styles.timelineWrapper}>
-      <div className={styles.timelineLine} />
+    <section id="timeline" className={styles.timelineSection}>
+      <h2 className={styles.heading}>Timeline</h2>
       <ul className={styles.timeline} role="list">
-        {allData.map((entry, index) => (
-          <li
-            key={entry.id}
-            className={`${styles.timelineItem} ${visibleItems.has(index.toString()) ? styles.visible : styles.hidden}`}
-            data-index={index}
-            aria-label={`${entry.type}: ${entry.title}`}
-          >
-            <div className={styles.content}>
-              <span className={styles.date}>{entry.date}</span>
-              <h3 className={styles.title}>{entry.title}</h3>
-              {entry.institution && <p className={styles.org}>{entry.institution}</p>}
-              {entry.organization && <p className={styles.org}>{entry.organization}</p>}
-              <p className={styles.description}>{entry.description}</p>
-            </div>
-          </li>
-        ))}
+        {entries.map((entry, index) => {
+          const [ref, isVisible] = useScrollReveal({ threshold: 0.2 });
+          const isLeft = index % 2 === 0;
+          return (
+            <li
+              key={entry.id}
+              ref={ref}
+              className={`${styles.entry} ${isLeft ? styles.left : styles.right} ${isVisible ? styles.visible : ''}`}
+              role="listitem"
+              data-visible={isVisible ? 'true' : 'false'}
+              aria-label={`${entry.type} entry: ${entry.title}`}
+            >
+              <div className={styles.dateBadge} aria-hidden="true">
+                <span className={styles.dateText}>{entry.date}</span>
+              </div>
+              <div className={styles.icon}>
+                <FontAwesomeIcon icon={typeConfig[entry.type].icon} aria-hidden="true" />
+                <span className={styles.iconLabel}>{typeConfig[entry.type].label}</span>
+              </div>
+              <div className={styles.content}>
+                <h3 className={styles.title}>{entry.title}</h3>
+                <h4 className={styles.subtitle}>
+                  {entry.institution || entry.organization || 'Project'}
+                </h4>
+                <p className={styles.description}>{entry.description}</p>
+              </div>
+            </li>
+          );
+        })}
       </ul>
-    </div>
+    </section>
   );
 };
 
