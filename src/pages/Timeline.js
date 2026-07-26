@@ -1,14 +1,1 @@
-import React from 'react';
-import TimelineComponent from '../components/Timeline/Timeline';
-import styles from './Timeline.module.scss';
-
-const TimelinePage = () => {
-  return (
-    <section id="timeline" className={styles.timeline}>
-      <h2 className={styles.title}>Timeline</h2>
-      <TimelineComponent />
-    </section>
-  );
-};
-
-export default TimelinePage;
+// File removed as part of reverting to commit d5fcc29ae4dc7b54cf065b638009986791cb9f1f
