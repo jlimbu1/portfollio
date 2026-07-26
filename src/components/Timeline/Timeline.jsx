@@ -1,80 +1,88 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGraduationCap, faBriefcase, faCode } from '@fortawesome/free-solid-svg-icons';
-import useScrollReveal from '../../hooks/useScrollReveal';
-import TimelineNode from './TimelineNode';
+import React, { useMemo } from 'react';
+import { useScrollReveal } from '../../hooks/useScrollReveal';
 import { educationData, experienceData, projectData } from '../../data/timelineData';
-import st from '../../styles/Timeline.module.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faGraduationCap,
+  faBriefcase,
+  faLaptopCode
+} from '@fortawesome/free-solid-svg-icons';
+import styles from './Timeline.module.scss';
 
-const TYPE_CONFIG = {
-  education: { icon: faGraduationCap, label: 'Education' },
-  experience: { icon: faBriefcase, label: 'Experience' },
-  project: { icon: faCode, label: 'Project' },
+const typeConfig = {
+  education: {
+    icon: faGraduationCap,
+    label: 'Education',
+    color: '#4caf50'
+  },
+  experience: {
+    icon: faBriefcase,
+    label: 'Experience',
+    color: '#2196f3'
+  },
+  project: {
+    icon: faLaptopCode,
+    label: 'Project',
+    color: '#ff9800'
+  }
 };
 
-function mergeAndSort() {
-  const all = [
-    ...educationData.map((e) => ({ ...e, type: 'education' })),
-    ...experienceData.map((e) => ({ ...e, type: 'experience' })),
-    ...projectData.map((e) => ({ ...e, type: 'project' })),
-  ];
-  return all.sort((a, b) => new Date(b.date) - new Date(a.date));
-}
+const parseStartYear = (dateStr) => {
+  const clean = dateStr.trim();
+  const matches = clean.match(/^(\d{4})/);
+  return matches ? parseInt(matches[1], 10) : 0;
+};
 
-function Timeline() {
-  const [sectionRef, sectionVisible] = useScrollReveal();
-  const entries = mergeAndSort();
-
-  if (!entries || entries.length === 0) {
-    return (
-      <section
-        id="timeline"
-        className={st.timeline}
-        aria-label="Career timeline"
-        role="region"
-      >
-        <div className={st.timelineEmpty} role="status">
-          No timeline entries available.
-        </div>
-      </section>
-    );
-  }
+const Timeline = () => {
+  const allEntries = useMemo(() => {
+    const entries = [
+      ...educationData.map(e => ({ ...e })),
+      ...experienceData.map(e => ({ ...e })),
+      ...projectData.map(e => ({ ...e }))
+    ];
+    return entries.sort((a, b) => parseStartYear(a.date) - parseStartYear(b.date));
+  }, []);
 
   return (
-    <section
-      id="timeline"
-      className={st.timeline}
-      aria-label="Career timeline"
-      role="region"
-    >
-      <h2 className={st.timelineHeading}>Timeline</h2>
-      <div
-        ref={sectionRef}
-        className={`${st.timelineTrack} ${sectionVisible ? st.timelineTrackVisible : ''}`}
-        role="list"
-        aria-label="Timeline entries"
-      >
-        {entries.map((entry, index) => {
-          const config = TYPE_CONFIG[entry.type] || TYPE_CONFIG.project;
-          const isLeft = index % 2 === 0;
-
-          return (
-            <TimelineNode
-              key={`${entry.type}-${entry.title}-${entry.date}`}
-              entry={entry}
-              icon={config.icon}
-              typeLabel={config.label}
-              isLeft={isLeft}
-              index={index}
-            />
-          );
-        })}
-      </div>
-    </section>
+    <div className={styles.timeline} role="list" aria-label="Career Timeline">
+      {allEntries.map((entry, index) => (
+        <TimelineItem
+          key={entry.id}
+          entry={entry}
+          isEven={index % 2 === 0}
+          config={typeConfig[entry.type]}
+        />
+      ))}
+    </div>
   );
-}
+};
 
-Timeline.propTypes = {};
+const TimelineItem = ({ entry, isEven, config }) => {
+  const [ref, visible] = useScrollReveal(0.2);
+  const itemClasses = `${styles.item} ${visible ? styles.visible : styles.hidden} ${isEven ? styles.left : styles.right}`;
+
+  return (
+    <div
+      ref={ref}
+      className={itemClasses}
+      role="listitem"
+      aria-label={`${config.label}: ${entry.title}`}
+    >
+      <div className={styles.dateBadge}>
+        <span className={styles.dateText}>{entry.date}</span>
+      </div>
+      <div className={styles.card}>
+        <div className={styles.iconWrapper} style={{ color: config.color }}>
+          <FontAwesomeIcon icon={config.icon} size="lg" />
+        </div>
+        <div className={styles.content}>
+          <h3 className={styles.title}>{entry.title}</h3>
+          <p className={styles.org}>{entry.institution || entry.organization}</p>
+          <p className={styles.description}>{entry.description}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default Timeline;

@@ -1,0 +1,48 @@
+import React, { useState } from 'react';
+import { useScrollSpy } from '../hooks/useScrollSpy';
+import styles from './Nav.module.scss'; // assuming styles exist
+
+const sections = ['about', 'timeline', 'projects', 'skills', 'footer'];
+
+const Nav = () => {
+  const active = useScrollSpy(sections, 80);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => setMenuOpen(!menuOpen);
+  const closeMenu = () => setMenuOpen(false);
+
+  return (
+    <nav className={styles.nav} role="navigation" aria-label="Main navigation">
+      <div className={styles.container}>
+        <span className={styles.logo}>Portfolio</span>
+        <button
+          className={styles.hamburger}
+          aria-label="Toggle menu"
+          aria-expanded={menuOpen}
+          onClick={toggleMenu}
+        >
+          <span className={styles.bar}></span>
+          <span className={styles.bar}></span>
+          <span className={styles.bar}></span>
+        </button>
+        <ul className={`${styles.menu} ${menuOpen ? styles.open : ''}`} role="menubar">
+          {sections.map((sec) => (
+            <li key={sec} role="none">
+              <a
+                href={`#${sec}`}
+                className={active === sec ? styles.active : ''}
+                role="menuitem"
+                onClick={closeMenu}
+                aria-current={active === sec ? 'page' : undefined}
+              >
+                {sec.charAt(0).toUpperCase() + sec.slice(1)}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </nav>
+  );
+};
+
+export default Nav;

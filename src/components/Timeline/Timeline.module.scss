@@ -1,0 +1,157 @@
+.timeline {
+  position: relative;
+  padding: 2rem 1rem;
+  margin: 0 auto;
+  max-width: 1200px;
+
+  // vertical line
+  &::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(to bottom, #4caf50, #2196f3, #ff9800);
+    transform: translateX(-50%);
+    border-radius: 2px;
+    z-index: 0;
+  }
+}
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  margin-bottom: 2.5rem;
+  z-index: 1;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  // default: both sides on desktop fallback (centered)
+  &.left {
+    flex-direction: row-reverse;
+  }
+
+  &.right {
+    flex-direction: row;
+  }
+}
+
+.dateBadge {
+  flex: 0 0 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+
+  .dateText {
+    background: #333;
+    color: #fff;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+}
+
+.card {
+  flex: 1;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  margin: 0 1rem;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+
+  &:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+  }
+}
+
+.iconWrapper {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.04);
+  border-radius: 50%;
+  color: #2196f3;
+}
+
+.content {
+  .title {
+    margin: 0 0 0.25rem 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .org {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.95rem;
+    color: #666;
+    font-style: italic;
+  }
+
+  .description {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #555;
+  }
+}
+
+// Responsive: mobile stack vertically
+@media (max-width: 767px) {
+  .timeline {
+    padding: 1.5rem 0.5rem;
+
+    &::before {
+      left: 20px; // align with icon column
+      transform: none;
+    }
+  }
+
+  .item {
+    flex-direction: column;
+    align-items: stretch;
+
+    &.left,
+    &.right {
+      flex-direction: column;
+    }
+  }
+
+  .dateBadge {
+    flex: none;
+    width: 100%;
+    justify-content: flex-start;
+    margin-left: 0;
+    position: relative;
+    left: auto;
+    padding-left: 40px; // space for line
+    margin-bottom: 0.5rem;
+  }
+
+  .card {
+    margin: 0;
+    margin-left: 0;
+    margin-right: 0;
+    flex-direction: row;
+  }
+}

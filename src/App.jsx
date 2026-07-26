@@ -1,8 +1,7 @@
 import React from 'react';
 import Nav from './pages/Nav';
 import Abouts from './pages/Abouts';
-import Edus from './pages/Edus';
-import Exps from './pages/Exps';
+import Timeline from './components/Timeline/Timeline';
 import Projects from './pages/Projects';
 import Skills from './pages/Skills';
 import Footer from './pages/Footer';
@@ -16,11 +15,8 @@ function App() {
         <section id="about">
           <Abouts />
         </section>
-        <section id="education">
-          <Edus />
-        </section>
-        <section id="experience">
-          <Exps />
+        <section id="timeline">
+          <Timeline />
         </section>
         <section id="projects">
           <Projects />
@@ -28,8 +24,10 @@ function App() {
         <section id="skills">
           <Skills />
         </section>
+        <section id="footer">
+          <Footer />
+        </section>
       </main>
-      <Footer />
     </div>
   );
 }
