@@ -27,7 +27,6 @@ describe('Timeline', () => {
     expect(screen.getByText('2022 - 2023')).toBeInTheDocument();
     expect(screen.getByText('2023 - Present')).toBeInTheDocument();
     expect(screen.getByText('2022')).toBeInTheDocument();
-    expect(screen.getByText('2022')).toBeInTheDocument();
     expect(screen.getByText('2023')).toBeInTheDocument();
   });
 

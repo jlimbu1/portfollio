@@ -1,55 +1,35 @@
 import React, { useState } from 'react';
-import { useScrollSpy } from '../hooks/useScrollSpy';
-
-const sectionIds = ['about', 'skills', 'projects', 'experience', 'education', 'contact'];
+import styles from './Nav.module.scss';
 
 const Nav = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const activeSection = useScrollSpy(sectionIds, 100);
 
-  const toggleMenu = () => setMenuOpen(prev => !prev);
-
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      toggleMenu();
-    }
-  };
+  const toggleMenu = () => setMenuOpen(!menuOpen);
 
   return (
-    <header role="banner">
-      <nav aria-label="Main navigation">
-        <div className="logo">
-          <a href="#home" aria-label="Home">Portfolio</a>
-        </div>
+    <nav className={styles.nav} role="navigation" aria-label="Main navigation">
+      <div className={styles.container}>
+        <a href="#" className={styles.logo}>
+          Portfolio
+        </a>
         <button
-          className={`hamburger ${menuOpen ? 'open' : ''}`}
+          className={`${styles.hamburger} ${menuOpen ? styles.open : ''}`}
           onClick={toggleMenu}
-          onKeyDown={handleKeyDown}
           aria-expanded={menuOpen}
-          aria-controls="nav-menu"
           aria-label="Toggle navigation menu"
         >
-          <span></span>
-          <span></span>
-          <span></span>
+          <span />
+          <span />
+          <span />
         </button>
-        <ul id="nav-menu" className={`nav-links ${menuOpen ? 'visible' : ''}`} role="menubar">
-          {sectionIds.map((id) => (
-            <li key={id} role="none">
-              <a
-                href={`#${id}`}
-                role="menuitem"
-                className={activeSection === id ? 'active' : ''}
-                tabIndex={0}
-              >
-                {id.charAt(0).toUpperCase() + id.slice(1)}
-              </a>
-            </li>
-          ))}
+        <ul className={`${styles.menu} ${menuOpen ? styles.menuOpen : ''}`} role="menubar">
+          <li role="none"><a href="#about" role="menuitem" onClick={() => setMenuOpen(false)}>About</a></li>
+          <li role="none"><a href="#skills" role="menuitem" onClick={() => setMenuOpen(false)}>Skills</a></li>
+          <li role="none"><a href="#timeline" role="menuitem" onClick={() => setMenuOpen(false)}>Timeline</a></li>
+          <li role="none"><a href="#contact" role="menuitem" onClick={() => setMenuOpen(false)}>Contact</a></li>
         </ul>
-      </nav>
-    </header>
+      </div>
+    </nav>
   );
 };
 

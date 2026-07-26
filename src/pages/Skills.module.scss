@@ -1,0 +1,18 @@
+@use '../styles/Const.module.scss' as *;
+
+.skills {
+  padding: 4rem 0;
+}
+
+.title {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: $light;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.5rem;
+}

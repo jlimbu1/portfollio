@@ -1,0 +1,12 @@
+@use '../styles/Const.module.scss' as *;
+
+.timeline {
+  padding: 4rem 0;
+}
+
+.title {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: $light;
+}

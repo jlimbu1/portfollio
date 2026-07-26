@@ -1,86 +1,54 @@
-import React, { useMemo } from 'react';
-import { useScrollReveal } from '../../hooks/useScrollReveal';
+import React, { useEffect, useRef, useState } from 'react';
 import { educationData, experienceData, projectData } from '../../data/timelineData';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faGraduationCap,
-  faBriefcase,
-  faLaptopCode
-} from '@fortawesome/free-solid-svg-icons';
 import styles from './Timeline.module.scss';
 
-const typeConfig = {
-  education: {
-    icon: faGraduationCap,
-    label: 'Education',
-    color: '#4caf50'
-  },
-  experience: {
-    icon: faBriefcase,
-    label: 'Experience',
-    color: '#2196f3'
-  },
-  project: {
-    icon: faLaptopCode,
-    label: 'Project',
-    color: '#ff9800'
-  }
-};
-
-const parseStartYear = (dateStr) => {
-  const clean = dateStr.trim();
-  const matches = clean.match(/^(\d{4})/);
-  return matches ? parseInt(matches[1], 10) : 0;
-};
+const allData = [...educationData, ...experienceData, ...projectData].sort((a, b) => {
+  const yearA = parseInt(a.date.split(' - ')[0]);
+  const yearB = parseInt(b.date.split(' - ')[0]);
+  return yearA - yearB;
+});
 
 const Timeline = () => {
-  const allEntries = useMemo(() => {
-    const entries = [
-      ...educationData.map(e => ({ ...e })),
-      ...experienceData.map(e => ({ ...e })),
-      ...projectData.map(e => ({ ...e }))
-    ];
-    return entries.sort((a, b) => parseStartYear(a.date) - parseStartYear(b.date));
+  const [visibleItems, setVisibleItems] = useState(new Set());
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setVisibleItems((prev) => new Set([...prev, entry.target.dataset.index]));
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    const items = document.querySelectorAll(`.${styles.timelineItem}`);
+    items.forEach((item) => observer.observe(item));
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <div className={styles.timeline} role="list" aria-label="Career Timeline">
-      {allEntries.map((entry, index) => (
-        <TimelineItem
-          key={entry.id}
-          entry={entry}
-          isEven={index % 2 === 0}
-          config={typeConfig[entry.type]}
-        />
-      ))}
-    </div>
-  );
-};
-
-const TimelineItem = ({ entry, isEven, config }) => {
-  const [ref, visible] = useScrollReveal(0.2);
-  const itemClasses = `${styles.item} ${visible ? styles.visible : styles.hidden} ${isEven ? styles.left : styles.right}`;
-
-  return (
-    <div
-      ref={ref}
-      className={itemClasses}
-      role="listitem"
-      aria-label={`${config.label}: ${entry.title}`}
-    >
-      <div className={styles.dateBadge}>
-        <span className={styles.dateText}>{entry.date}</span>
-      </div>
-      <div className={styles.card}>
-        <div className={styles.iconWrapper} style={{ color: config.color }}>
-          <FontAwesomeIcon icon={config.icon} size="lg" />
-        </div>
-        <div className={styles.content}>
-          <h3 className={styles.title}>{entry.title}</h3>
-          <p className={styles.org}>{entry.institution || entry.organization}</p>
-          <p className={styles.description}>{entry.description}</p>
-        </div>
-      </div>
+    <div className={styles.timelineWrapper}>
+      <div className={styles.timelineLine} />
+      <ul className={styles.timeline} role="list">
+        {allData.map((entry, index) => (
+          <li
+            key={entry.id}
+            className={`${styles.timelineItem} ${visibleItems.has(index.toString()) ? styles.visible : styles.hidden}`}
+            data-index={index}
+            aria-label={`${entry.type}: ${entry.title}`}
+          >
+            <div className={styles.content}>
+              <span className={styles.date}>{entry.date}</span>
+              <h3 className={styles.title}>{entry.title}</h3>
+              {entry.institution && <p className={styles.org}>{entry.institution}</p>}
+              {entry.organization && <p className={styles.org}>{entry.organization}</p>}
+              <p className={styles.description}>{entry.description}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

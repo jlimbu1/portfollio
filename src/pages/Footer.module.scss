@@ -1,0 +1,15 @@
+@use '../styles/Const.module.scss' as *;
+
+.footer {
+  background: $darker;
+  border-top: 1px solid $border-color;
+  padding: 1.5rem 0;
+  text-align: center;
+}
+
+.container {
+  max-width: $max-width;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  color: $grey;
+}

@@ -1,8 +1,32 @@
+@use './Const.module.scss' as *;
+
 .app {
-  max-width: 100%;
-  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-main {
-  padding-top: 60px; // if nav is fixed
+.main {
+  flex: 1;
+  width: 100%;
+  max-width: $max-width;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+
+  @media (min-width: $breakpoint-md) {
+    padding: 0 2rem;
+  }
+}
+
+.section {
+  padding: 5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    padding: 3rem 0;
+  }
 }
